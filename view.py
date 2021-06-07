@@ -24,6 +24,7 @@ class CellAutomate(tk.Frame):
     self.showWelcomeWindow()
 
   def destroyAllWidgets(self):
+    '''Destroy all widgets at window frame.'''
     for widget in self.winfo_children():
        widget.destroy()
           
