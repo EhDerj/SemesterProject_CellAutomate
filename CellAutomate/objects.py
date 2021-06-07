@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 class Colors:
 
     def __init__(self):
-        colors = {
+        self.colors = {
             'White': 0,
             'Black': 1,
             'Red': 2,
@@ -22,7 +22,7 @@ class Colors:
 
 
 class LifeMap:
-    def __init__(self, size, colorsSeq, borderTrough=False):
+    def __init__(self, size, borderTrough=False):
         self._size = tuple(size)
         self.currentColors = Colors()
         self.connectBorders = borderTrough
@@ -35,7 +35,12 @@ class LifeMap:
         self.cellMatrix[m][n] = colorID
 
     def getCell(self, m, n):
-        return self.cellMatrix[m][n]
+        if self.connectBorders:
+            return self.cellMatrix[m % self.getSize()[1]][n % self.getSize()[0]]
+        elif 0 <= m < self.getSize()[1] and 0 <= n < self.getSize()[0]:
+            return self.cellMatrix[m][n]
+        else:
+            return 0
 
     def getCellMatrix(self):
         return self.cellMatrix
