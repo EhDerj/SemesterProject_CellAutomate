@@ -22,13 +22,33 @@ class CellAutomate(tk.Frame):
 
     # Create widgets
     self.showWelcomeWindow()
+
+  def destroyAllWidgets(self):
+    for widget in self.winfo_children():
+       widget.destroy()
           
   def showWelcomeWindow(self):
     '''Show welcome window.'''
+    
+    # Set up window
     self.master.title('Добро пожаловать в клеточный мир!')
+    self.destroyAllWidgets()
+
+    # Set up widgets
+    self.btnEnter = tk.Button(self, text='Enter!', command=self.showMainWindow)
+    self.btnEnter.grid()
     
   def showMainWindow(self):
     '''Show main window.'''
+
+    # Set up window
     self.master.title('Клеточный мир!')
+    self.destroyAllWidgets()
+    
+    # Set up widgets
+    self.cvsMap = tk.Canvas(self)
+    self.btnExit = tk.Button(self, text='Exit!', command=self.showWelcomeWindow)
+    self.cvsMap.grid()
+    self.btnExit.grid()
 
 
