@@ -78,7 +78,7 @@ class RulesNearCells(RuleManager):
         self.vonNeumanNBH = NeumannFlag
 
     def compute(self, x, y, lifeMap):
-        colordisp = [0, 0, 0, 0, 0]
+        colordisp = [0, 0, 0, 0, 0, lifeMap.getCell(x, y)]
         if self.vonNeumanNBH:
             for i in range(-1, 1):
                 for j in range(-1, 1):
