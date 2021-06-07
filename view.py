@@ -2,6 +2,10 @@
 Tkinter skeleton app
 '''
 import tkinter as tk
+from CellAutomate.colors import Colors
+
+
+colors = [color for color in Colors().colors][1:len(Colors().colors)//2]
 
 
 class CellAutomate(tk.Frame):
@@ -20,7 +24,7 @@ class CellAutomate(tk.Frame):
     for row in range(self.grid_size()[1]):
       self.rowconfigure(row, weight=1)
 
-    # Create widgets
+    self.chosenColor = tk.IntVar(None)
     self.showWelcomeWindow()
 
   def destroyAllWidgets(self):
@@ -36,8 +40,13 @@ class CellAutomate(tk.Frame):
     self.destroyAllWidgets()
 
     # Set up widgets
+    self.rbColors = []
+    for i, color in enumerate(colors):
+      rbColor = tk.Radiobutton(self, text = color, variable = self.chosenColor, value = i)
+      rbColor.pack()
+      self.rbColors.append(rbColor)
     self.btnEnter = tk.Button(self, text='Enter!', command=self.showMainWindow)
-    self.btnEnter.grid()
+    self.btnEnter.pack()
     
   def showMainWindow(self):
     '''Show main window.'''
@@ -52,4 +61,5 @@ class CellAutomate(tk.Frame):
     self.cvsMap.grid()
     self.btnExit.grid()
 
+  
 
