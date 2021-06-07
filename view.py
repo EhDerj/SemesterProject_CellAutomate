@@ -24,7 +24,7 @@ class CellAutomateGUI(tk.Frame):
     for row in range(self.grid_size()[1]):
       self.rowconfigure(row, weight=1)
 
-    self.chosenColor = tk.IntVar(None)
+    self.chosenColor = tk.IntVar(0)
     self.showWelcomeWindow()
 
   def destroyAllWidgets(self):
