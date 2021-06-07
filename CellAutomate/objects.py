@@ -80,9 +80,9 @@ class RulesNearCells(RuleManager):
     def compute(self, x, y, lifeMap):
         colordisp = [0, 0, 0, 0, 0, lifeMap.getCell(x, y)]
         if self.vonNeumanNBH:
-            for i in range(-1, 1):
-                for j in range(-1, 1):
-                    if (i, j) != (x, y): colordisp[lifeMap.getCell(x + i, y + j)] += 1
+            for i in range(-1, 2):
+                for j in range(-1, 2):
+                    if (i, j) != (0, 0): colordisp[lifeMap.getCell(x + i, y + j)] += 1
         else:
             colordisp[lifeMap.getCell(x, y - 1)] += 1
             colordisp[lifeMap.getCell(x + 1, y)] += 1
