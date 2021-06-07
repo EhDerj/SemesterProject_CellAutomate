@@ -1,5 +1,7 @@
 class Colors:
-
+    """
+    -Basic color ID palette dictionary
+    """
     def __init__(self):
         self.colors = {
             'White': 0,
@@ -15,4 +17,8 @@ class Colors:
         }
 
     def swapColor(self, nameID):
+        """
+        Color ID swapping
+        ColorID -> Color Name
+        """
         return self.colors[nameID]

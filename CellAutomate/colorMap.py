@@ -1,4 +1,9 @@
 class ColorMap:
+    """
+    -lifeMap resulting matrix
+    -Transfered to view.py
+    -Remains constant on single iteration
+    """
     def __init__(self, lifeMap):
         self._size = lifeMap.getSize()
         self.colorMatrix = []

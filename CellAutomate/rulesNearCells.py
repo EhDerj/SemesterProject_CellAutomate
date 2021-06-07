@@ -1,11 +1,17 @@
 from ruleManager import RuleManager
 
 class RulesNearCells(RuleManager):
+    """
+    -Implementing Von Neumann's or Moore's
+    neighbourhood algorithms
+    -Set with "NeumannFlag" bool init parameter
+    """
     def __init__(self, rlDict, NeumannFlag):
         self.rules = rlDict
         self.vonNeumanNBH = NeumannFlag
 
     def compute(self, x, y, lifeMap):
+        """"""
         colordisp = [0, 0, 0, 0, 0, lifeMap.getCell(x, y)]
         if self.vonNeumanNBH:
             for i in range(-1, 2):

@@ -1,6 +1,9 @@
 from ruleManager import RuleManager
 
 class RulesSquares(RuleManager):
+    """
+    -Implementing and handling Square-Block neighbourhood class
+    """
     def __init__(self, rlDict):
         self.rules = rlDict
         self.computed = dict()

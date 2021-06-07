@@ -1,6 +1,9 @@
 from colors import Colors
 
 class LifeMap:
+    """
+
+    """
     def __init__(self, size, borderTrough=False):
         self._size = tuple(size)
         self.currentColors = Colors()

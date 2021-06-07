@@ -1,6 +1,7 @@
 from lifeMap import LifeMap
 import itertools as it
 
+
 class Model:
     def __init__(self, lMap, manager):
         self.lifeMap = lMap
