@@ -26,7 +26,8 @@ class LifeMap:
         self._size = tuple(size)
         self.currentColors = Colors()
         self.connectBorders = borderTrough
-        self.cellMatrix = [[0] * self._size[0]] * self._size[1]
+        row = [0] * self._size[1]
+        self.cellMatrix = [list(row) for i in range(self._size[0])]
 
     def getSize(self):
         return self._size
@@ -37,7 +38,7 @@ class LifeMap:
     def getCell(self, m, n):
         if self.connectBorders:
             return self.cellMatrix[m % self.getSize()[1]][n % self.getSize()[0]]
-        elif 0 <= m < self.getSize()[1] and 0 <= n < self.getSize()[0]:
+        elif 0 <= m < self.getSize()[0] and 0 <= n < self.getSize()[1]:
             return self.cellMatrix[m][n]
         else:
             return 0
