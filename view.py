@@ -8,6 +8,8 @@ from collections import namedtuple
 
 MAP_SIZE = namedtuple('RectangleSize', ['width', 'height'])(50, 50)
 CELL_SIZE = 10
+LIFE_DELAY = 1000
+
 colors = [color for color in Colors().colors][1:len(Colors().colors)//2]
 
 
@@ -64,8 +66,12 @@ class CellAutomateGUI(tk.Frame):
     
     # Set up widgets
     self.cvsCells = tk.Canvas(self, width=MAP_SIZE.width * CELL_SIZE, height=MAP_SIZE.height * CELL_SIZE)
-    self.btnExit = tk.Button(self, text='Exit!', command=self.showWelcomeWindow)
+    self.btnStart = tk.Button(self, text='Start', command=self.iterateLifeLoop)
+    self.btnStop = tk.Button(self, text='Stop', command=self.stopLife, state='disabled')
+    self.btnExit = tk.Button(self, text='Exit', command=self.showWelcomeWindow)
     self.cvsCells.grid()
+    self.btnStart.grid()
+    self.btnStop.grid()
     self.btnExit.grid()
 
     self.refreshMap()
@@ -83,3 +89,16 @@ class CellAutomateGUI(tk.Frame):
     self.iteration += 1
     self.map = [[(i + j + self.iteration) % 2 for j in range(MAP_SIZE.width)] for i in range(MAP_SIZE.height)]
 
+  def iterateLifeLoop(self):
+    self.refreshMap()
+    self.refreshScene()
+    self.lifeLoopId = self.after(LIFE_DELAY, self.iterateLifeLoop)
+
+    self.btnStart['state'] = 'disabled'
+    self.btnStop['state'] = 'normal'
+    
+  def stopLife(self):
+    self.after_cancel(self.lifeLoopId)
+
+    self.btnStart['state'] = 'normal'
+    self.btnStop['state'] = 'disabled'
