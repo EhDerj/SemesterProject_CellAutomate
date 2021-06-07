@@ -1,4 +1,4 @@
-from objects import LifeMap
+from lifeMap import LifeMap
 import itertools as it
 
 class Model:
