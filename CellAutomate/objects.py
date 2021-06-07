@@ -1,25 +1,28 @@
+from abc import ABC, abstractmethod
+
+
 class Colors:
-    
 
     def __init__(self):
         colors = {
-        'White': 0,
-        'Black': 1,
-        'Red': 2,
-        'Yellow': 3,
-        'Blue': 4,
-        0: 'White',
-        1: 'Black',
-        2: 'Red',
-        3: 'Yellow',
-        4: 'Blue'
+            'White': 0,
+            'Black': 1,
+            'Red': 2,
+            'Yellow': 3,
+            'Blue': 4,
+            0: 'White',
+            1: 'Black',
+            2: 'Red',
+            3: 'Yellow',
+            4: 'Blue'
         }
 
     def swapColor(self, nameID):
         return self.colors[nameID]
 
+
 class LifeMap:
-    def __init__(self, size, colorsSeq,  borderTrough = False):
+    def __init__(self, size, colorsSeq, borderTrough=False):
         self._size = tuple(size)
         self.currentColors = Colors()
         self.connectBorders = borderTrough
@@ -36,6 +39,7 @@ class LifeMap:
 
     def getCellMatrix(self):
         return self.cellMatrix
+
 
 class ColorMap:
     def __init__(self, lifeMap):
@@ -54,3 +58,11 @@ class ColorMap:
 
     def getColorMatrix(self):
         return self.colorMatrix
+
+
+class RuleManager(ABC):
+
+    @abstractmethod
+    def compute(self):
+        """Abstract method"""
+        """Computes current cell color according to rules"""
