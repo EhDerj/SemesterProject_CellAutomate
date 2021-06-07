@@ -1,6 +1,6 @@
-from view import CellAutomate
+from view import CellAutomateGUI
 
 if __name__ == '__main__':
-  cellAutomate = CellAutomate()
-  cellAutomate.mainloop()
+  cellAutomateGUI = CellAutomateGUI()
+  cellAutomateGUI.mainloop()
 

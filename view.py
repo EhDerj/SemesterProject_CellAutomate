@@ -8,7 +8,7 @@ from CellAutomate.colors import Colors
 colors = [color for color in Colors().colors][1:len(Colors().colors)//2]
 
 
-class CellAutomate(tk.Frame):
+class CellAutomateGUI(tk.Frame):
   '''Cell automate GUI.'''
 
   def __init__(self, master=None, **kwargs):
