@@ -77,3 +77,4 @@ class RulesSquares(RuleManager):
     Changes if it's need to shift computing grid
         """
         self.shift = not self.shift
+        self.computed = dict()
