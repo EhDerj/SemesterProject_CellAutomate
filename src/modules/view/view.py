@@ -14,7 +14,7 @@ _ = ru.gettext
 class View(tk.Frame):
     """Cell automate GUI."""
 
-    CELL_SIZE = 10
+    CELL_SIZE = 15
     LIFE_DELAY = 250
 
     def __init__(self, controller):
