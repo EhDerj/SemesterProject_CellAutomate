@@ -6,7 +6,7 @@ from collections import namedtuple
 RectangleSize = namedtuple('RectangleSize', ['width', 'height'])
 
 CELL_SIZE = 10
-LIFE_DELAY = 1000
+LIFE_DELAY = 500
 
 colors = [color for color in Colors().colors][1:len(Colors().colors)//2]
 
