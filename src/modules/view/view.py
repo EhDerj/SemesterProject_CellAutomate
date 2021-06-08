@@ -9,6 +9,7 @@ CELL_SIZE = 10
 LIFE_DELAY = 500
 
 colors = [color for color in Colors().colors][1:len(Colors().colors)//2]
+colorMap = Colors().colors
 
 
 class View(tk.Frame):
@@ -84,13 +85,13 @@ class View(tk.Frame):
     for i, row in enumerate(self.map):
       for j, colorIndex in enumerate(row):
         x0, y0 = j * CELL_SIZE, i * CELL_SIZE
-        color = ['white', *colors][colorIndex]
+        color = colorMap[colorIndex]
         self.cvsCells.create_rectangle(x0, y0, x0 + CELL_SIZE, y0 + CELL_SIZE, fill=color, outline='#eee')
   
   def refreshMap(self):
     '''Requests fresh map from model.'''
     self.iteration += 1
-    self.map = [[(i + j + self.iteration) % 2 for j in range(self.lifemapSize.width)] for i in range(self.lifemapSize.height)]
+    self.map = [[(i + j + self.iteration) % (len(colors) + 1) for j in range(self.lifemapSize.width)] for i in range(self.lifemapSize.height)]
 
   def iterateLifeLoop(self):
     '''Iterates life by refreshing map and scene.'''
