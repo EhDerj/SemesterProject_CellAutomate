@@ -6,13 +6,12 @@ from utils.types import RectangleSize
 
 
 class View(tk.Frame):
+  '''Cell automate GUI.'''
+
   CELL_SIZE = 10
   LIFE_DELAY = 500
-
-  colors = [color for color in Colors().colors][1:len(Colors().colors)//2]
-  colorMap = Colors().colors
-
-  '''Cell automate GUI.'''
+  COLORS = [color for color in Colors().colors][1:len(Colors().colors)//2]
+  COLOR_MAP = Colors().colors
 
   def __init__(self, controller):
     '''Create root window with frame, tune weight and resize.'''
@@ -28,7 +27,7 @@ class View(tk.Frame):
     for row in range(self.grid_size()[1]):
       self.rowconfigure(row, weight=1)
 
-    self.chosenColors = [tk.IntVar(self, int(i == 0)) for i, x in enumerate(View.colors)]
+    self.chosenColors = [tk.IntVar(self, int(i == 0)) for i, x in enumerate(View.COLORS)]
     self.isLifeStarted = False
     self.showWelcomeWindow()
 
@@ -48,7 +47,7 @@ class View(tk.Frame):
 
     # Set up widgets
     self.cbColors = []
-    for i, color in enumerate(View.colors):
+    for i, color in enumerate(View.COLORS):
       rbColor = tk.Checkbutton(self, text = color, variable = self.chosenColors[i])
       rbColor.pack()
       self.cbColors.append(rbColor)
@@ -83,7 +82,7 @@ class View(tk.Frame):
     self.btnStart = tk.Button(self, text='Start', command=self.startLife)
     self.btnStop = tk.Button(self, text='Stop', command=self.stopLife, state='disabled')
     self.btnExit = tk.Button(self, text='Exit', command=self.showWelcomeWindow)
-    self.cbDrawColor = ttk.Combobox(self, values=['White', *map(lambda x: View.colorMap[x], self.mapColorIndices)], state='readonly')
+    self.cbDrawColor = ttk.Combobox(self, values=['White', *map(lambda x: View.COLOR_MAP[x], self.mapColorIndices)], state='readonly')
     self.cbDrawColor.current(0)
 
     # Place widgets
@@ -105,7 +104,7 @@ class View(tk.Frame):
     '''Fills (i,j) cell with color with colorIndex'''
     if self.checkOutbounds(i, j):
       x0, y0 = j * View.CELL_SIZE, i * View.CELL_SIZE
-      color = View.colorMap[colorIndex]
+      color = View.COLOR_MAP[colorIndex]
       return self.cvsCells.create_rectangle(x0, y0, x0 + View.CELL_SIZE, y0 + View.CELL_SIZE, fill=color, outline='#eee')
     else:
       return None
@@ -158,6 +157,6 @@ class View(tk.Frame):
     i, j = e.y // View.CELL_SIZE, e.x // View.CELL_SIZE
     if self.checkOutbounds(i, j):
       color = self.cbDrawColor.get() or 'Black'
-      colorIndex = View.colorMap[color]
+      colorIndex = View.COLOR_MAP[color]
       self.map[i][j] = colorIndex
       self.draw(i, j, colorIndex)
