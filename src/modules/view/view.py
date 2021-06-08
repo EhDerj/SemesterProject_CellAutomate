@@ -19,7 +19,6 @@ class View(tk.Frame):
     '''Create root window with frame, tune weight and resize.'''
     super().__init__(None)
     self.controller = controller
-    self.lifemapSize = RectangleSize(*controller.getLifemapSize())
 
     # Set up grid
     self.master.columnconfigure(0, weight=1)
@@ -70,6 +69,7 @@ class View(tk.Frame):
       return
 
     # Init state
+    self.lifemapSize = RectangleSize(*self.controller.getLifemapSize())
     self.map = [[0] * self.lifemapSize.width for i in range(self.lifemapSize.height)]
     self.iteration = 0
     self.mapColorIndices = list(filter(lambda x: x >= 0, [1 + colorIndex if isChoosed.get() == 1 else -1 for colorIndex, isChoosed in enumerate(self.chosenColors)]))
