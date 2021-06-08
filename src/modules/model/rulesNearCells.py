@@ -3,7 +3,8 @@ from .ruleManager import RuleManager
 
 class RulesNearCells(RuleManager):
     """
-    Offspring of an abstract RuleManager class, implementing Von Neumann's or Moore's neighbourhood algorithms
+    Offspring of an abstract RuleManager class, implementing Von Neumann's
+    or Moore's neighbourhood algorithms
 
     Attributes
     __________
@@ -46,7 +47,8 @@ class RulesNearCells(RuleManager):
         if self.flagMoore:
             for i in range(-1, 2):
                 for j in range(-1, 2):
-                    if (i, j) != (0, 0): colordisp[lifeMap.getCell(x + i, y + j)] += 1
+                    if (i, j) != (0, 0):
+                        colordisp[lifeMap.getCell(x + i, y + j)] += 1
         else:
             colordisp[lifeMap.getCell(x, y - 1)] += 1
             colordisp[lifeMap.getCell(x + 1, y)] += 1
