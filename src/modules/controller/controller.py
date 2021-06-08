@@ -23,7 +23,6 @@ class Controller:
     return currentLifemap
 
   def getRuleFiles(self):
-    print(listdir('.'))
     onlyfiles = [f for f in listdir('./rules') if isfile(join('./rules', f))]
     self.retVal = []
     for i in onlyfiles:

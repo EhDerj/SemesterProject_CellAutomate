@@ -53,6 +53,7 @@ class View(tk.Frame):
         self.lbRuleSetups.pack()
 
         self.lbColors = tk.Listbox(self, selectmode='multiple')
+        self.lbColors.bind('<<ListboxSelect>>', self.on_lbColors_Select)
         self.lbColors.pack()
 
         self.btnEnter = tk.Button(
@@ -87,16 +88,22 @@ class View(tk.Frame):
         
     def on_lbRuleSetups_Select(self, e):
         """Handle rule setups list box select."""
-        self.selectedRuleSetupIndex = self.lbRuleSetups.curselection()[0]
-        self.refreshLbColors()
+        curSelection = self.lbRuleSetups.curselection()
+        if len(curSelection) > 0:
+            self.selectedRuleSetupIndex = curSelection[0]
+            self.refreshLbColors()
+
+    def on_lbColors_Select(self, e):
+        """Handle colors list box select."""
+        curSelection = self.lbColors.curselection()
+        if len(curSelection) > 0:
+            self.chosenColors = list(curSelection)
 
     # Main
 
     def showMainWindow(self):
         """Show main window."""
-        hasAnyColor = any([
-            isChoosed.get() == 1 for isChoosed in self.chosenColors
-        ])
+        hasAnyColor = len(self.chosenColors) > 0
         if not hasAnyColor:
             messagebox.showerror(
                 'No chosen colors',
@@ -110,12 +117,7 @@ class View(tk.Frame):
         for i in range(self.lifemapSize.height):
             self.map.append([0] * self.lifemapSize.width)
         self.iteration = 0
-        chosenColorIndices = []
-        for colorIndex, isChoosed in enumerate(self.chosenColors):
-            if isChoosed.get() == 0:
-                continue
-
-            chosenColorIndices.append(1 + colorIndex)
+        chosenColorIndices = list(map(lambda x: 1 + x, self.chosenColors))
         self.mapColorIndices = chosenColorIndices
 
         # Set up window
