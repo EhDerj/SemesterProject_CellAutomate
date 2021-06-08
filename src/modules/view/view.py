@@ -28,11 +28,10 @@ class View(tk.Frame):
         for row in range(self.grid_size()[1]):
             self.rowconfigure(row, weight=1)
 
-        self.chosenColors = [
-            tk.IntVar(
-                self, int(
-                    i == 0)) for i, x in enumerate(
-                View.COLORS)]
+        self.chosenColors = []
+        for i, x in enumerate(View.COLORS):
+            colorIntVar = tk.IntVar(self, int(i == 0))
+            self.chosenColors.append(colorIntVar)
         self.isLifeStarted = False
         self.showWelcomeWindow()
 
@@ -54,11 +53,17 @@ class View(tk.Frame):
         self.cbColors = []
         for i, color in enumerate(View.COLORS):
             rbColor = tk.Checkbutton(
-                self, text=color, variable=self.chosenColors[i])
+                self,
+                text=color,
+                variable=self.chosenColors[i]
+            )
             rbColor.pack()
             self.cbColors.append(rbColor)
         self.btnEnter = tk.Button(
-            self, text='Enter!', command=self.showMainWindow)
+            self,
+            text='Enter!',
+            command=self.showMainWindow
+        )
         self.btnEnter.pack()
         self.lbRuleSetups = tk.Listbox(self)
         for index, ruleSetup in enumerate(self.ruleSetupList):
@@ -68,30 +73,29 @@ class View(tk.Frame):
 
     def showMainWindow(self):
         """Show main window."""
-        hasAnyColor = any(
-            [isChoosed.get() == 1 for isChoosed in self.chosenColors])
+        hasAnyColor = any([
+            isChoosed.get() == 1 for isChoosed in self.chosenColors
+        ])
         if not hasAnyColor:
             messagebox.showerror(
                 'No chosen colors',
-                'Choose any color to continue')
+                'Choose any color to continue'
+            )
             return
 
         # Init state
         self.lifemapSize = RectangleSize(*self.controller.getLifemapSize())
-        self.map = [
-            [0] *
-            self.lifemapSize.width for i in range(
-                self.lifemapSize.height)]
+        self.map = []
+        for i in range(self.lifemapSize.height):
+            self.map.append([0] * self.lifemapSize.width)
         self.iteration = 0
-        self.mapColorIndices = list(
-            filter(
-                lambda x: x >= 0,
-                [
-                    1 +
-                    colorIndex if isChoosed.get() == 1 else -
-                    1 for colorIndex,
-                    isChoosed in enumerate(
-                        self.chosenColors)]))
+        chosenColorIndices = []
+        for colorIndex, isChoosed in enumerate(self.chosenColors):
+            if isChoosed.get() == 0:
+                continue
+
+            chosenColorIndices.append(1 + colorIndex)
+        self.mapColorIndices = chosenColorIndices
 
         # Set up window
         self.master.title('Cell World...')
@@ -100,26 +104,31 @@ class View(tk.Frame):
         # Init widgets
         self.cvsCells = tk.Canvas(
             self,
-            width=self.lifemapSize.width *
-            View.CELL_SIZE,
-            height=self.lifemapSize.height *
-            View.CELL_SIZE)
+            width=self.lifemapSize.width * View.CELL_SIZE,
+            height=self.lifemapSize.height * View.CELL_SIZE
+        )
         self.cvsCells.bind('<B1-Motion>', self.on_CvsCells_HoldingMouseOver)
         self.btnStart = tk.Button(self, text='Start', command=self.startLife)
         self.btnStop = tk.Button(
             self,
             text='Stop',
             command=self.stopLife,
-            state='disabled')
+            state='disabled'
+        )
         self.btnExit = tk.Button(
-            self, text='Exit', command=self.showWelcomeWindow)
+            self,
+            text='Exit',
+            command=self.showWelcomeWindow
+        )
         cbValues = [
             'White',
             *map(lambda x: View.COLOR_MAP[x], self.mapColorIndices),
         ]
-        self.cbDrawColor = ttk.Combobox(self,
-                                        values=cbValues,
-                                        state='readonly')
+        self.cbDrawColor = ttk.Combobox(
+            self,
+            values=cbValues,
+            state='readonly'
+        )
         self.cbDrawColor.current(0)
 
         # Place widgets
