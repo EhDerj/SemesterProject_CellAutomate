@@ -23,11 +23,12 @@ class Controller:
     return currentLifemap
 
   def getRuleFiles(self):
-    onlyfiles = [f for f in listdir('../../rules') if isfile(join('../../rules', f))]
+    print(listdir('.'))
+    onlyfiles = [f for f in listdir('./rules') if isfile(join('./rules', f))]
     self.retVal = []
     for i in onlyfiles:
       k = 0
-      with open(i, "r") as f:
+      with open("rules/%s" % i, "r") as f:
         self.col = f.readline().replace("\n", " ").split(" ")
         self.typeRules = f.readline().replace("\n", " ").split(" ")
         self.rlDict = eval(f.read())
