@@ -3,21 +3,22 @@ from utils.colors import Colors
 from collections import namedtuple
 
 
+RectangleSize = namedtuple('RectangleSize', ['width', 'height'])
 
-
-MAP_SIZE = namedtuple('RectangleSize', ['width', 'height'])(50, 50)
 CELL_SIZE = 10
 LIFE_DELAY = 1000
 
 colors = [color for color in Colors().colors][1:len(Colors().colors)//2]
 
 
-class CellAutomateGUI(tk.Frame):
+class View(tk.Frame):
   '''Cell automate GUI.'''
 
-  def __init__(self, master=None, **kwargs):
+  def __init__(self, controller):
     '''Create root window with frame, tune weight and resize.'''
-    super().__init__(master, **kwargs)
+    super().__init__(None)
+    self.controller = controller
+    self.lifemapSize = RectangleSize(*controller.getLifemapSize())
 
     # Set up grid
     self.master.columnconfigure(0, weight=1)
@@ -56,7 +57,7 @@ class CellAutomateGUI(tk.Frame):
     '''Show main window.'''
 
     # Init state
-    self.map = [[0] * MAP_SIZE.width for i in range(MAP_SIZE.height)]
+    self.map = [[0] * self.lifemapSize.width for i in range(self.lifemapSize.height)]
     self.iteration = 0
 
     # Set up window
@@ -64,7 +65,7 @@ class CellAutomateGUI(tk.Frame):
     self.destroyAllWidgets()
     
     # Set up widgets
-    self.cvsCells = tk.Canvas(self, width=MAP_SIZE.width * CELL_SIZE, height=MAP_SIZE.height * CELL_SIZE)
+    self.cvsCells = tk.Canvas(self, width=self.lifemapSize.width * CELL_SIZE, height=self.lifemapSize.height * CELL_SIZE)
     self.btnStart = tk.Button(self, text='Start', command=self.iterateLifeLoop)
     self.btnStop = tk.Button(self, text='Stop', command=self.stopLife, state='disabled')
     self.btnExit = tk.Button(self, text='Exit', command=self.showWelcomeWindow)
@@ -86,7 +87,7 @@ class CellAutomateGUI(tk.Frame):
   
   def refreshMap(self):
     self.iteration += 1
-    self.map = [[(i + j + self.iteration) % 2 for j in range(MAP_SIZE.width)] for i in range(MAP_SIZE.height)]
+    self.map = [[(i + j + self.iteration) % 2 for j in range(self.lifemapSize.width)] for i in range(self.lifemapSize.height)]
 
   def iterateLifeLoop(self):
     self.refreshMap()

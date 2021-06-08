@@ -1,7 +1,7 @@
 import sys
-sys.path.append("../../utils")
+sys.path.append("../..")
 
-from colors import Colors
+from utils.colors import Colors
 
 
 class LifeMap:

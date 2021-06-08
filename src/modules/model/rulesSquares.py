@@ -1,4 +1,4 @@
-from ruleManager import RuleManager
+from .ruleManager import RuleManager
 
 class RulesSquares(RuleManager):
     """
