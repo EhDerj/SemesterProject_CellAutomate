@@ -11,8 +11,6 @@ class View(tk.Frame):
 
     CELL_SIZE = 10
     LIFE_DELAY = 500
-    COLORS = [color for color in Colors().colors][1:len(Colors().colors) // 2]
-    COLOR_MAP = Colors().colors
 
     def __init__(self, controller):
         """Create root window with frame, tune weight and resize."""
@@ -28,10 +26,7 @@ class View(tk.Frame):
         for row in range(self.grid_size()[1]):
             self.rowconfigure(row, weight=1)
 
-        self.chosenColors = []
-        for i, x in enumerate(View.COLORS):
-            colorIntVar = tk.IntVar(self, int(i == 0))
-            self.chosenColors.append(colorIntVar)
+        
         self.isLifeStarted = False
         self.showWelcomeWindow()
 
@@ -39,6 +34,8 @@ class View(tk.Frame):
         """Destroy all widgets at window frame."""
         for widget in self.winfo_children():
             widget.destroy()
+
+    # Welcome
 
     def showWelcomeWindow(self):
         """Show welcome window."""
@@ -51,7 +48,7 @@ class View(tk.Frame):
 
         # Set up widgets
         self.cbColors = []
-        for i, color in enumerate(View.COLORS):
+        for i, color in enumerate(self.colors):
             rbColor = tk.Checkbutton(
                 self,
                 text=color,
@@ -59,6 +56,7 @@ class View(tk.Frame):
             )
             rbColor.pack()
             self.cbColors.append(rbColor)
+            
         self.btnEnter = tk.Button(
             self,
             text='Enter!',
@@ -66,10 +64,37 @@ class View(tk.Frame):
         )
         self.btnEnter.pack()
         self.lbRuleSetups = tk.Listbox(self)
+        self.lbRuleSetups.bind('<<ListboxSelect>>', self.on_lbRuleSetups_Select)
+        self.refreshLbRuleSetups()
+        self.lbRuleSetups.pack()
+
+    def on_lbRuleSetups_Select(self, e):
+        """Handle rule setups list box select."""
+        print(e)
+        self.chosenColors = []
+        for i, x in enumerate(self.colors):
+            colorIntVar = tk.IntVar(self, int(i == 0))
+            self.chosenColors.append(colorIntVar)
+        
+
+    def refreshLbRuleSetups(self):
+        """Refresh listbox rule setups."""
+        self.lbRuleSetups.delete(0, 'END')
         for index, ruleSetup in enumerate(self.ruleSetupList):
             ruleSourceFilename = ruleSetup[0]
             self.lbRuleSetups.insert(index, ruleSourceFilename)
-        self.lbRuleSetups.pack()
+
+    def refreshRuleSetupList(self):
+        """Refresh rule setup list."""
+        res = self.controller.getRuleFiles()
+        print(res)
+
+        self.colors = [color for color in res][1:len(res) // 2]
+        self.colorMap = res
+        self.ruleSetupList = res
+        
+
+    # Main
 
     def showMainWindow(self):
         """Show main window."""
@@ -122,7 +147,7 @@ class View(tk.Frame):
         )
         cbValues = [
             'White',
-            *map(lambda x: View.COLOR_MAP[x], self.mapColorIndices),
+            *map(lambda x: self.colorMap[x], self.mapColorIndices),
         ]
         self.cbDrawColor = ttk.Combobox(
             self,
@@ -151,7 +176,7 @@ class View(tk.Frame):
         if self.checkOutbounds(i, j):
             x0, y0 = j * View.CELL_SIZE, i * View.CELL_SIZE
             x1, y1 = x0 + View.CELL_SIZE, y0 + View.CELL_SIZE
-            color = View.COLOR_MAP[colorIndex]
+            color = self.colorMap[colorIndex]
             return self.cvsCells.create_rectangle(
                 x0, y0, x1, y1, fill=color, outline='#eee')
         else:
@@ -173,10 +198,6 @@ class View(tk.Frame):
                                              self.iteration) %
                                             (len(self.mapColorIndices) +
                                              1)] for j in range(self.lifemapSize.width)] for i in range(self.lifemapSize.height)]
-
-    def refreshRuleSetupList(self):
-        """Refresh rule setup list."""
-        self.ruleSetupList = [('rules1.txt', 1), ('second_rules.txt', 2), ]
 
     def iterateLifeLoop(self):
         """Iterate life by refreshing map and scene."""
@@ -212,6 +233,6 @@ class View(tk.Frame):
         i, j = e.y // View.CELL_SIZE, e.x // View.CELL_SIZE
         if self.checkOutbounds(i, j):
             color = self.cbDrawColor.get() or 'Black'
-            colorIndex = View.COLOR_MAP[color]
+            colorIndex = self.colorMap[color]
             self.map[i][j] = colorIndex
             self.draw(i, j, colorIndex)

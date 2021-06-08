@@ -5,7 +5,7 @@ from modules.view import View
 
 if __name__ == '__main__':
   map = LifeMap((25, 25))
-  manager = RulesNearCells({}, 1)
+  manager = RulesNearCells(2, None, True, {})
 
   model = Model(map, manager)
   controller = Controller(model)
