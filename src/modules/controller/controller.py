@@ -56,9 +56,9 @@ class Controller:
                 col = f.readline().replace("\n", " ").split(" ")[:-1]
                 typeRules = f.readline().replace("\n", " ").split(" ")
                 rlDict = eval(f.read())
-        Colors = utils.colors.Colors(col)
-        self.retVal.append((i, k, Colors, typeRules, rlDict, col))
-        k += 1
+            Colors = utils.colors.Colors(col)
+            self.retVal.append((i, k, Colors, typeRules, rlDict, col))
+            k += 1
         return self.retVal
 
     def setLifemapSize(self, width, height):
