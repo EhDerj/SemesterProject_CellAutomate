@@ -49,3 +49,6 @@ class LifeMap:
 
     def getCellMatrix(self):
         return self.cellMatrix
+        
+    def setCellMatrix(self, cellMatrix):
+        self.cellMatrix = cellMatrix

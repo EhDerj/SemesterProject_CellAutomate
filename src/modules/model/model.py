@@ -41,6 +41,7 @@ class Model:
             self.buffer.setCell(i, j, self.ruleManager.compute(i, j, self.lifeMap))
         self.ruleManager.changeMode()
         self.lifeMap, self.buffer = self.buffer, self.lifeMap
+        print(self.lifeMap.cellMatrix[0])
 
     def getLifeMap(self):
         return self.lifeMap

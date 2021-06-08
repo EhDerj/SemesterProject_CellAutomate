@@ -80,7 +80,6 @@ class View(tk.Frame):
         self.lbColors.delete(0, END)
         for i, color in enumerate(self.colors):
             self.lbColors.insert(i, color)
-        
 
     def synRuleSetupList(self):
         """Refresh rule setup list."""
@@ -119,6 +118,8 @@ class View(tk.Frame):
         self.iteration = 0
         chosenColorIndices = list(map(lambda x: 1 + x, self.chosenColors))
         self.mapColorIndices = chosenColorIndices
+        self.controller.initModel(self.selectedRuleSetupIndex)
+        self.lifemapSize = RectangleSize(*self.controller.getLifemapSize())
 
         # Set up window
         self.master.title('Cell World...')
@@ -190,15 +191,11 @@ class View(tk.Frame):
     def refreshMap(self):
         """Request fresh map from model."""
         self.iteration += 1
-        self.map = [[[0, *
-                      self.mapColorIndices][(i +
-                                             j +
-                                             self.iteration) %
-                                            (len(self.mapColorIndices) +
-                                             1)] for j in range(self.lifemapSize.width)] for i in range(self.lifemapSize.height)]
+        self.map = self.controller.getMap().getCellMatrix()
 
     def iterateLifeLoop(self):
         """Iterate life by refreshing map and scene."""
+        self.controller.makeStep()
         self.refreshMap()
         self.refreshScene()
         self.lifeLoopId = self.after(View.LIFE_DELAY, self.iterateLifeLoop)
@@ -209,6 +206,8 @@ class View(tk.Frame):
     def startLife(self):
         """Start life."""
         self.isLifeStarted = True
+        self.controller.setCellMatrix(self.map)
+        print(self.controller.model.lifeMap.cellMatrix[0])
         self.iterateLifeLoop()
 
     def stopLife(self):

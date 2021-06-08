@@ -44,6 +44,9 @@ class Controller:
     currentLifemap = self.model.getLifeMap()
     return currentLifemap
 
+  def makeStep(self):
+    self.model.makeStep()
+
   def getRuleFiles(self):
     onlyfiles = [f for f in listdir('./rules') if isfile(join('./rules', f))]
     self.retVal = []
@@ -77,5 +80,5 @@ class Controller:
         elif self.typeRules[0] == "margolis":
           self.model.ruleManager = RulesSquares(int(self.typeRules[1]), self.rlDict)
 
-  def setLifeMap(self, lifeMap):
-    self.model.lifeMap = lifeMap
+  def setCellMatrix(self, cellMatrix):
+    self.model.lifeMap.setCellMatrix(cellMatrix)
