@@ -106,7 +106,7 @@ class View(tk.Frame):
 
     def showMainWindow(self):
         """Show main window."""
-        hasAnyColor = len(self.chosenColors) > 0
+        hasAnyColor = hasattr(self, "chosenColors")
         if not hasAnyColor:
             messagebox.showerror(
                 _('No chosen colors'),
