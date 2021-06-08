@@ -43,7 +43,7 @@ class Controller:
   
   def initModel(ruleIndex):
     for i in self.retVal:
-      if i[0] = ruleIndex:
+      if i[0] == ruleIndex:
         if self.typeRules[0] == "Moore":
           self.model.ruleManager = RulesNearCells(self.rlDict, True)
         elif .selftypeRules[0] == "vonNeumann":
