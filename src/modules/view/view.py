@@ -88,6 +88,7 @@ class View(tk.Frame):
 
   def refreshScene(self):
     '''Refreshes cells.'''
+    self.cvsCells.delete('all')
     for i, row in enumerate(self.map):
       for j, colorIndex in enumerate(row):
         x0, y0 = j * CELL_SIZE, i * CELL_SIZE
