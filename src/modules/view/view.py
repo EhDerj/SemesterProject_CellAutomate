@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import ttk
 from utils.colors import Colors
 from collections import namedtuple
 from tkinter import messagebox
@@ -73,13 +74,18 @@ class View(tk.Frame):
     self.master.title('Клеточный мир!')
     self.destroyAllWidgets()
     
-    # Set up widgets
+    # Init widgets
     self.cvsCells = tk.Canvas(self, width=self.lifemapSize.width * CELL_SIZE, height=self.lifemapSize.height * CELL_SIZE)
     self.cvsCells.bind('<B1-Motion>', self.on_CvsCells_HoldingMouseOver)
     self.btnStart = tk.Button(self, text='Start', command=self.startLife)
     self.btnStop = tk.Button(self, text='Stop', command=self.stopLife, state='disabled')
     self.btnExit = tk.Button(self, text='Exit', command=self.showWelcomeWindow)
+    self.cbDrawColor = ttk.Combobox(self, values=['White', *map(lambda x: colorMap[x], self.mapColorIndices)], state='readonly')
+    self.cbDrawColor.current(0)
+
+    # Place widgets
     self.cvsCells.grid()
+    self.cbDrawColor.grid()
     self.btnStart.grid()
     self.btnStop.grid()
     self.btnExit.grid()
@@ -133,5 +139,7 @@ class View(tk.Frame):
     width, height = self.lifemapSize
     i, j = e.y // CELL_SIZE, e.x // CELL_SIZE
     if i >= 0 and i < height and j >= 0 and j < width:
-      self.map[i][j] = 2
-      self.draw(i, j, 2)
+      color = self.cbDrawColor.get() or 'Black'
+      colorIndex = colorMap[color]
+      self.map[i][j] = colorIndex
+      self.draw(i, j, colorIndex)
