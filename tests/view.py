@@ -61,3 +61,20 @@ class ViewTests(unittest.TestCase):
     x1, y1 = x0 + cellSize, y0 + cellSize
     self.assertEqual(newObjectCoords, [x0, y0, x1, y1])
   
+  def test_outboundsMouseDraw(self):
+    '''Tests mouse draw'''
+    self.view.controller.getLifemapSize = MagicMock(return_value=(5, 5))
+    self.view.showMainWindow()
+    initialObjectIds = self.view.cvsCells.find_all()
+
+    cellSize = self.view.CELL_SIZE
+    motionEvent = MagicMock()
+    i, j = 5, 5
+    motionEvent.x = int(j * cellSize + cellSize // 2)
+    motionEvent.y = int(i * cellSize + cellSize // 2)
+    self.view.on_CvsCells_HoldingMouseOver(motionEvent)
+
+    currentObjectIds = self.view.cvsCells.find_all()
+    objectsDiff = [*filter(lambda id: id not in initialObjectIds, currentObjectIds)]
+    self.assertTrue(len(objectsDiff) == 0)
+  
