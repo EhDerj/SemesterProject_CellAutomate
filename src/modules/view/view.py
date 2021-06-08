@@ -78,7 +78,7 @@ class View(tk.Frame):
     self.refreshScene()
 
   def refreshScene(self):
-    '''Refresh cells.'''
+    '''Refreshes cells.'''
     for i, row in enumerate(self.map):
       for j, colorIndex in enumerate(row):
         x0, y0 = j * CELL_SIZE, i * CELL_SIZE
@@ -86,10 +86,12 @@ class View(tk.Frame):
         self.cvsCells.create_rectangle(x0, y0, x0 + CELL_SIZE, y0 + CELL_SIZE, fill=color, outline='#eee')
   
   def refreshMap(self):
+    '''Requests fresh map from model.'''
     self.iteration += 1
     self.map = [[(i + j + self.iteration) % 2 for j in range(self.lifemapSize.width)] for i in range(self.lifemapSize.height)]
 
   def iterateLifeLoop(self):
+    '''Iterates life by refreshing map and scene.'''
     self.refreshMap()
     self.refreshScene()
     self.lifeLoopId = self.after(LIFE_DELAY, self.iterateLifeLoop)
@@ -98,6 +100,7 @@ class View(tk.Frame):
     self.btnStop['state'] = 'normal'
     
   def stopLife(self):
+    '''Starts life.'''
     self.after_cancel(self.lifeLoopId)
 
     self.btnStart['state'] = 'normal'
