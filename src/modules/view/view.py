@@ -1,11 +1,9 @@
 import tkinter as tk
 from tkinter import ttk
 from utils.colors import Colors
-from collections import namedtuple
 from tkinter import messagebox
+from utils.types import RectangleSize
 
-
-RectangleSize = namedtuple('RectangleSize', ['width', 'height'])
 
 CELL_SIZE = 10
 LIFE_DELAY = 500
