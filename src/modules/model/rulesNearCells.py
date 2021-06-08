@@ -1,5 +1,6 @@
 from .ruleManager import RuleManager
 
+
 class RulesNearCells(RuleManager):
     """
     Offspring of an abstract RuleManager class, implementing Von Neumann's or Moore's neighbourhood algorithms

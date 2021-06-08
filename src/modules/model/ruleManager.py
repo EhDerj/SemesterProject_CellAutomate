@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+
 class RuleManager(ABC):
     """
     Abstract class for creating two offspring rule classes

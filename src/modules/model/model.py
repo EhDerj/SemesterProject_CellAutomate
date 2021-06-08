@@ -1,6 +1,7 @@
 from .lifeMap import LifeMap
 import itertools as it
 
+
 class Model:
     """
     This class represents the full model of the system, including the matrix and the set of rules
@@ -23,6 +24,7 @@ class Model:
     getLifeMap()
         gets the used lifeMap
     """
+
     def __init__(self, lMap, manager):
         self.lifeMap = lMap
         self.buffer = LifeMap(lMap.getSize())

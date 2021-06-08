@@ -1,5 +1,6 @@
 from .ruleManager import RuleManager
 
+
 class RulesSquares(RuleManager):
     """
     Offspring of an abstract RuleManager class, implementing Margulis-block neighbourhood algorithms
@@ -22,6 +23,7 @@ class RulesSquares(RuleManager):
     changeMode()
         move computing grid for 1 cell diagonal
     """
+
     def __init__(self, defaultColor, rules):
         self.defaultColor = defaultColor
         self.rules = rules
@@ -42,15 +44,15 @@ class RulesSquares(RuleManager):
             del self.computed[(x, y)]
             return n
         grid = (
-            (x+0, y+0),
-            (x+1, y+0),
-            (x+0, y+1),
-            (x+1, y+1),
-        ) if self.shift else(
-            (x-1, y-1),
-            (x+0, y-1),
-            (x-1, y+0),
-            (x+0, y+0),
+            (x + 0, y + 0),
+            (x + 1, y + 0),
+            (x + 0, y + 1),
+            (x + 1, y + 1),
+        ) if self.shift else (
+            (x - 1, y - 1),
+            (x + 0, y - 1),
+            (x - 1, y + 0),
+            (x + 0, y + 0),
         )
         tup = (
             lifeMap.getCell(*grid[0]),
@@ -61,10 +63,10 @@ class RulesSquares(RuleManager):
         if tup in self.rules:
             tup = self.rules[tup]
         elif self.defaultColor is not None:
-            tup = (self.defaultColor, )*4
-        self.computed[grid[0]],\
-        self.computed[grid[1]],\
-        self.computed[grid[2]],\
+            tup = (self.defaultColor,) * 4
+        self.computed[grid[0]], \
+        self.computed[grid[1]], \
+        self.computed[grid[2]], \
         self.computed[grid[3]] = tup
         n = self.computed[(x, y)]
         del self.computed[(x, y)]

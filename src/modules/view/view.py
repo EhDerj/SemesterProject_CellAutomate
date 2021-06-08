@@ -50,8 +50,8 @@ class View(tk.Frame):
         # Set up widgets
         self.lbRuleSetups = tk.Listbox(self)
         self.lbRuleSetups.bind(
-          '<<ListboxSelect>>',
-          self.on_lbRuleSetups_Select,
+            '<<ListboxSelect>>',
+            self.on_lbRuleSetups_Select,
         )
         self.refreshLbRuleSetups()
         self.lbRuleSetups.pack()
