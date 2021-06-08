@@ -1,6 +1,12 @@
 class Colors:
     """
-    -Basic color ID palette dictionary
+    Colors class is a basic 5 color palette^ expressed in a dictionary
+    The correspondence is two-way (for further convenience)
+
+    Methods
+    _______
+    swapColor(self, nameID)
+        Swaps the numerical ID for <color>: str
     """
     def __init__(self):
         self.colors = {
@@ -17,8 +23,4 @@ class Colors:
         }
 
     def swapColor(self, nameID):
-        """
-        Color ID swapping
-        ColorID -> Color Name
-        """
         return self.colors[nameID]
