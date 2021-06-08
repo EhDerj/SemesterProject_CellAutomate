@@ -113,10 +113,12 @@ class View(tk.Frame):
             state='disabled')
         self.btnExit = tk.Button(
             self, text='Exit', command=self.showWelcomeWindow)
+        cbValues = [
+            'White',
+            *map(lambda x: View.COLOR_MAP[x], self.mapColorIndices),
+        ]
         self.cbDrawColor = ttk.Combobox(self,
-                                        values=['White',
-                                                *map(lambda x: View.COLOR_MAP[x],
-                                                     self.mapColorIndices)],
+                                        values=cbValues,
                                         state='readonly')
         self.cbDrawColor.current(0)
 
@@ -139,9 +141,10 @@ class View(tk.Frame):
         """Fill (i,j) cell with color with colorIndex."""
         if self.checkOutbounds(i, j):
             x0, y0 = j * View.CELL_SIZE, i * View.CELL_SIZE
+            x1, y1 = x0 + View.CELL_SIZE, y0 + View.CELL_SIZE
             color = View.COLOR_MAP[colorIndex]
             return self.cvsCells.create_rectangle(
-                x0, y0, x0 + View.CELL_SIZE, y0 + View.CELL_SIZE, fill=color, outline='#eee')
+                x0, y0, x1, y1, fill=color, outline='#eee')
         else:
             return None
 
