@@ -1,6 +1,7 @@
 import tkinter as tk
 from utils.colors import Colors
 from collections import namedtuple
+from tkinter import messagebox
 
 
 RectangleSize = namedtuple('RectangleSize', ['width', 'height'])
@@ -30,7 +31,7 @@ class View(tk.Frame):
     for row in range(self.grid_size()[1]):
       self.rowconfigure(row, weight=1)
 
-    self.chosenColor = tk.IntVar()
+    self.chosenColors = [tk.IntVar(self, int(i == 0)) for i, x in enumerate(colors)]
     self.isLifeStarted = False
     self.showWelcomeWindow()
 
@@ -48,20 +49,25 @@ class View(tk.Frame):
     self.destroyAllWidgets()
 
     # Set up widgets
-    self.rbColors = []
+    self.cbColors = []
     for i, color in enumerate(colors):
-      rbColor = tk.Radiobutton(self, text = color, variable = self.chosenColor, value = i)
+      rbColor = tk.Checkbutton(self, text = color, variable = self.chosenColors[i])
       rbColor.pack()
-      self.rbColors.append(rbColor)
+      self.cbColors.append(rbColor)
     self.btnEnter = tk.Button(self, text='Enter!', command=self.showMainWindow)
     self.btnEnter.pack()
     
   def showMainWindow(self):
     '''Show main window.'''
+    hasAnyColor = any([isChoosed.get() == 1 for isChoosed in self.chosenColors])
+    if not hasAnyColor:
+      messagebox.showerror('No chosen colors', 'Choose any color to continue')
+      return
 
     # Init state
     self.map = [[0] * self.lifemapSize.width for i in range(self.lifemapSize.height)]
     self.iteration = 0
+    self.mapColorIndices = list(filter(lambda x: x >= 0, [1 + colorIndex if isChoosed.get() == 1 else -1 for colorIndex, isChoosed in enumerate(self.chosenColors)]))
 
     # Set up window
     self.master.title('Клеточный мир!')
@@ -91,7 +97,7 @@ class View(tk.Frame):
   def refreshMap(self):
     '''Requests fresh map from model.'''
     self.iteration += 1
-    self.map = [[(i + j + self.iteration) % (len(colors) + 1) for j in range(self.lifemapSize.width)] for i in range(self.lifemapSize.height)]
+    self.map = [[[0, *self.mapColorIndices][(i + j + self.iteration) % (len(self.mapColorIndices) + 1)] for j in range(self.lifemapSize.width)] for i in range(self.lifemapSize.height)]
 
   def iterateLifeLoop(self):
     '''Iterates life by refreshing map and scene.'''
