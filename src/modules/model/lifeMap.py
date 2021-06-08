@@ -1,9 +1,6 @@
 import sys
 sys.path.append("../..")
 
-from utils.colors import Colors
-
-
 class LifeMap:
     """
     LifeMap is an interactive class that contains basic information for building colored matrix
