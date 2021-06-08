@@ -11,18 +11,18 @@ class RulesNearCells(RuleManager):
 
     Methods
     _______
-    __init__(rlDict, NeumannFlag)
+    __init__(rlDict, MooreFlag)
         >rlDict: dictionary of rules^ used for coloring
-        >NeumannFlag: is True for Neumann neighborhood and False for Moore's
+        >MooreFlag: is True for Moore neighborhood and False for vonNeumann's
 
     compute(x, y, lifeMap)
         computes the color at cell (x, y)
         with consideration of lifeMap settings
     """
 
-    def __init__(self, rlDict, NeumannFlag):
+    def __init__(self, rlDict, MooreFlag):
         self.rules = rlDict
-        self.vonNeumanNBH = NeumannFlag
+        self.flagMoore = MooreFlag
 
     def compute(self, x, y, lifeMap):
         """
@@ -35,7 +35,7 @@ class RulesNearCells(RuleManager):
         """
 
         colordisp = [0, 0, 0, 0, 0, lifeMap.getCell(x, y)]
-        if self.vonNeumanNBH:
+        if self.flagMoore:
             for i in range(-1, 2):
                 for j in range(-1, 2):
                     if (i, j) != (0, 0): colordisp[lifeMap.getCell(x + i, y + j)] += 1
