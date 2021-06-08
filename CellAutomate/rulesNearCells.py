@@ -19,6 +19,7 @@ class RulesNearCells(RuleManager):
         computes the color at cell (x, y)
         with consideration of lifeMap settings
     """
+
     def __init__(self, rlDict, NeumannFlag):
         self.rules = rlDict
         self.vonNeumanNBH = NeumannFlag
