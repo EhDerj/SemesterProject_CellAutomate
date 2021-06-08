@@ -151,6 +151,10 @@ class View(tk.Frame):
 
   def on_CvsCells_HoldingMouseOver(self, e):
     '''Handling mouse motion on canvas with holded left button'''
+    if self.isLifeStarted:
+      messagebox.showwarning('Give them freedom, kingbird!', 'Drawing on living cells is denied')
+      return
+
     i, j = e.y // View.CELL_SIZE, e.x // View.CELL_SIZE
     if self.checkOutbounds(i, j):
       color = self.cbDrawColor.get() or 'Black'
