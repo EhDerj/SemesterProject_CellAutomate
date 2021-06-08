@@ -1,14 +1,16 @@
 import tkinter as tk
 from utils.colors import Colors
 from collections import namedtuple
+from tkinter import messagebox
 
 
 RectangleSize = namedtuple('RectangleSize', ['width', 'height'])
 
 CELL_SIZE = 10
-LIFE_DELAY = 1000
+LIFE_DELAY = 500
 
 colors = [color for color in Colors().colors][1:len(Colors().colors)//2]
+colorMap = Colors().colors
 
 
 class View(tk.Frame):
@@ -29,7 +31,8 @@ class View(tk.Frame):
     for row in range(self.grid_size()[1]):
       self.rowconfigure(row, weight=1)
 
-    self.chosenColor = tk.IntVar()
+    self.chosenColors = [tk.IntVar(self, int(i == 0)) for i, x in enumerate(colors)]
+    self.isLifeStarted = False
     self.showWelcomeWindow()
 
   def destroyAllWidgets(self):
@@ -39,26 +42,32 @@ class View(tk.Frame):
           
   def showWelcomeWindow(self):
     '''Show welcome window.'''
+    self.stopLife()
     
     # Set up window
     self.master.title('Добро пожаловать в клеточный мир!')
     self.destroyAllWidgets()
 
     # Set up widgets
-    self.rbColors = []
+    self.cbColors = []
     for i, color in enumerate(colors):
-      rbColor = tk.Radiobutton(self, text = color, variable = self.chosenColor, value = i)
+      rbColor = tk.Checkbutton(self, text = color, variable = self.chosenColors[i])
       rbColor.pack()
-      self.rbColors.append(rbColor)
+      self.cbColors.append(rbColor)
     self.btnEnter = tk.Button(self, text='Enter!', command=self.showMainWindow)
     self.btnEnter.pack()
     
   def showMainWindow(self):
     '''Show main window.'''
+    hasAnyColor = any([isChoosed.get() == 1 for isChoosed in self.chosenColors])
+    if not hasAnyColor:
+      messagebox.showerror('No chosen colors', 'Choose any color to continue')
+      return
 
     # Init state
     self.map = [[0] * self.lifemapSize.width for i in range(self.lifemapSize.height)]
     self.iteration = 0
+    self.mapColorIndices = list(filter(lambda x: x >= 0, [1 + colorIndex if isChoosed.get() == 1 else -1 for colorIndex, isChoosed in enumerate(self.chosenColors)]))
 
     # Set up window
     self.master.title('Клеточный мир!')
@@ -66,7 +75,7 @@ class View(tk.Frame):
     
     # Set up widgets
     self.cvsCells = tk.Canvas(self, width=self.lifemapSize.width * CELL_SIZE, height=self.lifemapSize.height * CELL_SIZE)
-    self.btnStart = tk.Button(self, text='Start', command=self.iterateLifeLoop)
+    self.btnStart = tk.Button(self, text='Start', command=self.startLife)
     self.btnStop = tk.Button(self, text='Stop', command=self.stopLife, state='disabled')
     self.btnExit = tk.Button(self, text='Exit', command=self.showWelcomeWindow)
     self.cvsCells.grid()
@@ -78,27 +87,37 @@ class View(tk.Frame):
     self.refreshScene()
 
   def refreshScene(self):
-    '''Refresh cells.'''
+    '''Refreshes cells.'''
     for i, row in enumerate(self.map):
       for j, colorIndex in enumerate(row):
         x0, y0 = j * CELL_SIZE, i * CELL_SIZE
-        color = ['white', *colors][colorIndex]
+        color = colorMap[colorIndex]
         self.cvsCells.create_rectangle(x0, y0, x0 + CELL_SIZE, y0 + CELL_SIZE, fill=color, outline='#eee')
   
   def refreshMap(self):
+    '''Requests fresh map from model.'''
     self.iteration += 1
-    self.map = [[(i + j + self.iteration) % 2 for j in range(self.lifemapSize.width)] for i in range(self.lifemapSize.height)]
+    self.map = [[[0, *self.mapColorIndices][(i + j + self.iteration) % (len(self.mapColorIndices) + 1)] for j in range(self.lifemapSize.width)] for i in range(self.lifemapSize.height)]
 
   def iterateLifeLoop(self):
+    '''Iterates life by refreshing map and scene.'''
     self.refreshMap()
     self.refreshScene()
     self.lifeLoopId = self.after(LIFE_DELAY, self.iterateLifeLoop)
 
     self.btnStart['state'] = 'disabled'
     self.btnStop['state'] = 'normal'
+
+  def startLife(self):
+    '''Starts life.'''
+    self.isLifeStarted = True
+    self.iterateLifeLoop()
     
   def stopLife(self):
-    self.after_cancel(self.lifeLoopId)
+    '''Starts life.'''
+    if self.isLifeStarted:
+      self.isLifeStarted = False
+      self.after_cancel(self.lifeLoopId)
 
-    self.btnStart['state'] = 'normal'
-    self.btnStop['state'] = 'disabled'
+      self.btnStart['state'] = 'normal'
+      self.btnStop['state'] = 'disabled'
