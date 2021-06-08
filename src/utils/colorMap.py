@@ -17,6 +17,7 @@ class ColorMap:
     getColorMatrix()
         retrieves the "colored" matrix
     """
+
     def __init__(self, lifeMap):
         self._size = lifeMap.getSize()
         self.colorMatrix = []
@@ -33,4 +34,3 @@ class ColorMap:
 
     def getColorMatrix(self):
         return self.colorMatrix
-

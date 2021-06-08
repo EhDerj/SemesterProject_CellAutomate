@@ -56,9 +56,9 @@ class Controller:
                 col = f.readline().replace("\n", " ").split(" ")[:-1]
                 typeRules = f.readline().replace("\n", " ").split(" ")
                 rlDict = eval(f.read())
-        Colors = utils.colors.Colors(col)
-        self.retVal.append((i, k, Colors, typeRules, rlDict, col))
-        k += 1
+            Colors = utils.colors.Colors(col)
+            self.retVal.append((i, k, Colors, typeRules, rlDict, col))
+            k += 1
         return self.retVal
 
     def setLifemapSize(self, width, height):
@@ -82,7 +82,7 @@ class Controller:
                 elif typeRules[0] == "Margolis":
                     self.model.ruleManager = RulesSquares(defaultColor, rlDict)
                 else:
-                    raise 'Ne zashol!'
+                    raise Exception('Ne zashol!')
 
     def setCellMatrix(self, cellMatrix):
         self.model.lifeMap.setCellMatrix(cellMatrix)
