@@ -76,13 +76,14 @@ class Controller:
         typeRules = self.retVal[ruleIndex][3]
         rlDict = self.retVal[ruleIndex][4]
         col = self.retVal[ruleIndex][5]
+        defaultColor = int(typeRules[1]) if typeRules[1] != "None" else None
         if typeRules[0] == "Moore":
-          self.model.ruleManager = RulesNearCells(colorsCount, int(typeRules[1]), True, rlDict)
+          self.model.ruleManager = RulesNearCells(colorsCount, defaultColor, True, rlDict)
           print(self.model.ruleManager)
         elif typeRules[0] == "VonNeumann":
-          self.model.ruleManager = RulesNearCells(colorsCount, int(typeRules[1]), False, rlDict)
+          self.model.ruleManager = RulesNearCells(colorsCount, defaultColor, False, rlDict)
         elif typeRules[0] == "Margolis":
-          self.model.ruleManager = RulesSquares(int(typeRules[1]) if typeRules[1] != "None" else None, rlDict)
+          self.model.ruleManager = RulesSquares(defaultColor, rlDict)
         else:
           raise 'Ne zashol!'
 
