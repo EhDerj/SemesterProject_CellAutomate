@@ -28,28 +28,27 @@ class Controller:
       k = 0
       with open(i, "r") as f:
         col = f.readline().replace("\n", " ").split(" ")
-        self.model.Colors(col)
         self.typeRules = f.readline().replace("\n", " ").split(" ")
         self.rlDict = eval(f.read())
         
       self.retVal.append((i, k, col))
       k += 1
-    return retVal
+    return self.retVal
 
   def setLifemapSize(self, width, height):
     ''' '''
     currentLifemap = self.model.getLifeMap()
     currentLifemap._size = tuple(width, height)
   
-  def initModel(ruleIndex):
+  def initModel(self, ruleIndex):
     for i in self.retVal:
       if i[0] == ruleIndex:
         if self.typeRules[0] == "Moore":
           self.model.ruleManager = RulesNearCells(self.rlDict, True)
-        elif .selftypeRules[0] == "vonNeumann":
+        elif self.typeRules[0] == "vonNeumann":
           self.model.ruleManager = RulesNearCells(self.rlDict, False)
         elif self.typeRules[0] == "margolis":
           self.model.ruleManager = RulesSquares(self.rlDict)
 
   def setLifeMap(self, lifeMap):
-    model.lifeMap = lifeMap
+    self.model.lifeMap = lifeMap
