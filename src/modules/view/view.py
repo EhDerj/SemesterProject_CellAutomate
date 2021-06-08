@@ -5,14 +5,13 @@ from tkinter import messagebox
 from utils.types import RectangleSize
 
 
-CELL_SIZE = 10
-LIFE_DELAY = 500
-
-colors = [color for color in Colors().colors][1:len(Colors().colors)//2]
-colorMap = Colors().colors
-
-
 class View(tk.Frame):
+  CELL_SIZE = 10
+  LIFE_DELAY = 500
+
+  colors = [color for color in Colors().colors][1:len(Colors().colors)//2]
+  colorMap = Colors().colors
+
   '''Cell automate GUI.'''
 
   def __init__(self, controller):
@@ -29,7 +28,7 @@ class View(tk.Frame):
     for row in range(self.grid_size()[1]):
       self.rowconfigure(row, weight=1)
 
-    self.chosenColors = [tk.IntVar(self, int(i == 0)) for i, x in enumerate(colors)]
+    self.chosenColors = [tk.IntVar(self, int(i == 0)) for i, x in enumerate(View.colors)]
     self.isLifeStarted = False
     self.showWelcomeWindow()
 
@@ -49,7 +48,7 @@ class View(tk.Frame):
 
     # Set up widgets
     self.cbColors = []
-    for i, color in enumerate(colors):
+    for i, color in enumerate(View.colors):
       rbColor = tk.Checkbutton(self, text = color, variable = self.chosenColors[i])
       rbColor.pack()
       self.cbColors.append(rbColor)
@@ -79,12 +78,12 @@ class View(tk.Frame):
     self.destroyAllWidgets()
     
     # Init widgets
-    self.cvsCells = tk.Canvas(self, width=self.lifemapSize.width * CELL_SIZE, height=self.lifemapSize.height * CELL_SIZE)
+    self.cvsCells = tk.Canvas(self, width=self.lifemapSize.width * View.CELL_SIZE, height=self.lifemapSize.height * View.CELL_SIZE)
     self.cvsCells.bind('<B1-Motion>', self.on_CvsCells_HoldingMouseOver)
     self.btnStart = tk.Button(self, text='Start', command=self.startLife)
     self.btnStop = tk.Button(self, text='Stop', command=self.stopLife, state='disabled')
     self.btnExit = tk.Button(self, text='Exit', command=self.showWelcomeWindow)
-    self.cbDrawColor = ttk.Combobox(self, values=['White', *map(lambda x: colorMap[x], self.mapColorIndices)], state='readonly')
+    self.cbDrawColor = ttk.Combobox(self, values=['White', *map(lambda x: View.colorMap[x], self.mapColorIndices)], state='readonly')
     self.cbDrawColor.current(0)
 
     # Place widgets
@@ -97,11 +96,19 @@ class View(tk.Frame):
     self.refreshMap()
     self.refreshScene()
 
+  def checkOutbounds(self, i, j):
+    '''Checks i, j places at lifemap'''
+    width, height = self.lifemapSize
+    return i >= 0 and i < height and j >= 0 and j < width
+
   def draw(self, i, j, colorIndex):
     '''Fills (i,j) cell with color with colorIndex'''
-    x0, y0 = j * CELL_SIZE, i * CELL_SIZE
-    color = colorMap[colorIndex]
-    return self.cvsCells.create_rectangle(x0, y0, x0 + CELL_SIZE, y0 + CELL_SIZE, fill=color, outline='#eee')
+    if self.checkOutbounds(i, j):
+      x0, y0 = j * View.CELL_SIZE, i * View.CELL_SIZE
+      color = View.colorMap[colorIndex]
+      return self.cvsCells.create_rectangle(x0, y0, x0 + View.CELL_SIZE, y0 + View.CELL_SIZE, fill=color, outline='#eee')
+    else:
+      return None
 
   def refreshScene(self):
     '''Refreshes cells.'''
@@ -123,7 +130,7 @@ class View(tk.Frame):
     '''Iterates life by refreshing map and scene.'''
     self.refreshMap()
     self.refreshScene()
-    self.lifeLoopId = self.after(LIFE_DELAY, self.iterateLifeLoop)
+    self.lifeLoopId = self.after(View.LIFE_DELAY, self.iterateLifeLoop)
 
     self.btnStart['state'] = 'disabled'
     self.btnStop['state'] = 'normal'
@@ -144,10 +151,9 @@ class View(tk.Frame):
 
   def on_CvsCells_HoldingMouseOver(self, e):
     '''Handling mouse motion on canvas with holded left button'''
-    width, height = self.lifemapSize
-    i, j = e.y // CELL_SIZE, e.x // CELL_SIZE
-    if i >= 0 and i < height and j >= 0 and j < width:
+    i, j = e.y // View.CELL_SIZE, e.x // View.CELL_SIZE
+    if self.checkOutbounds(i, j):
       color = self.cbDrawColor.get() or 'Black'
-      colorIndex = colorMap[color]
+      colorIndex = View.colorMap[color]
       self.map[i][j] = colorIndex
       self.draw(i, j, colorIndex)
