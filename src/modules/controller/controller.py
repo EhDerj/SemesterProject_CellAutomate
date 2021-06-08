@@ -6,7 +6,29 @@ from os import listdir
 from os.path import isfile, join
 
 class Controller:
-  '''Controller class.'''
+  """
+    Coltroller is a class that connects Model with View
+
+    Attributes
+    ----------
+    model: class
+        the model that is processed and transfered to view
+
+    Methods
+    ----------
+    getLifemapSize()
+        gets size of models' lifeMap
+    getMap()
+        gets the lifeMap itself
+    getRuleFiles()
+        retrieves the files containing rules of the coloring
+    initModel(ruleIndex)
+        initiates the model with fixed set of rules
+    setLifemapSize()
+        sets the size of lifeMap
+    setLifemap()
+        sets lifeMap itself
+  """
   
   def __init__(self, model):
     '''Initiates controller with model relation.'''
@@ -37,7 +59,8 @@ class Controller:
     return self.retVal
 
   def setLifemapSize(self, width, height):
-    ''' '''
+    ''' Setting size of models' lifeMap'''
+
     currentLifemap = self.model.getLifeMap()
     currentLifemap._size = (width, height)
   
