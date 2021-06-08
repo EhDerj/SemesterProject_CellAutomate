@@ -164,11 +164,11 @@ class View(tk.Frame):
         self.cbDrawColor.current(0)
 
         # Place widgets
-        self.cvsCells.grid()
-        self.cbDrawColor.grid()
-        self.btnStart.grid()
-        self.btnStop.grid()
-        self.btnExit.grid()
+        self.cvsCells.grid(columnspan=4)
+        self.cbDrawColor.grid(row=1, column=0)
+        self.btnStart.grid(row=1, column=1)
+        self.btnStop.grid(row=1, column=2)
+        self.btnExit.grid(row=1, column=3)
 
         self.refreshMap()
         self.refreshScene()
