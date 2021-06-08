@@ -32,14 +32,14 @@ class Controller:
         self.typeRules = f.readline().replace("\n", " ").split(" ")
         self.rlDict = eval(f.read())
         
-      self.retVal.append((i, k, col))
+      self.retVal.append((i, k, self.col))
       k += 1
     return self.retVal
 
   def setLifemapSize(self, width, height):
     ''' '''
     currentLifemap = self.model.getLifeMap()
-    currentLifemap._size = tuple(width, height)
+    currentLifemap._size = (width, height)
   
   def initModel(self, ruleIndex):
     self.Colors = utils.colors.Colors(self.col)
