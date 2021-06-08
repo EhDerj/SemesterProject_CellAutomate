@@ -11,6 +11,7 @@ class Controller:
   def __init__(self, model):
     '''Initiates controller with model relation.'''
     self.model = model
+    
 
   def getLifemapSize(self):
     '''Gets life map size.'''
@@ -31,8 +32,8 @@ class Controller:
         self.col = f.readline().replace("\n", " ").split(" ")
         self.typeRules = f.readline().replace("\n", " ").split(" ")
         self.rlDict = eval(f.read())
-        
-      self.retVal.append((i, k, col))
+      self.Colors = utils.colors.Colors(self.col)  
+      self.retVal.append((i, k, self.Colors))
       k += 1
     return self.retVal
 
@@ -42,7 +43,6 @@ class Controller:
     currentLifemap._size = tuple(width, height)
   
   def initModel(self, ruleIndex):
-    self.Colors = utils.colors.Colors(self.col)
     for i in self.retVal:
       if i[0] == ruleIndex:
         if self.typeRules[0] == "Moore":
