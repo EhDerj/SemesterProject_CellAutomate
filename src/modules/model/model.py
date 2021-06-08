@@ -39,6 +39,7 @@ class Model:
         x, y = self.lifeMap.getSize()
         for i, j in it.product(range(x), range(y)):
             self.buffer.setCell(i, j, self.ruleManager.compute(i, j, self.lifeMap))
+        self.ruleManager.changeMode()
         self.lifeMap, self.buffer = self.buffer, self.lifeMap
 
     def getLifeMap(self):

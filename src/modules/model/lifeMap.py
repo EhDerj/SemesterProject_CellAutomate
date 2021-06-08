@@ -1,9 +1,6 @@
 import sys
 sys.path.append("../..")
 
-from utils.colors import Colors
-
-
 class LifeMap:
     """
     LifeMap is an interactive class that contains basic information for building colored matrix
@@ -32,7 +29,6 @@ class LifeMap:
 
     def __init__(self, size, borderTrough=False):
         self._size = tuple(size)
-        self.currentColors = Colors()
         self.connectBorders = borderTrough
         row = [0] * self._size[1]
         self.cellMatrix = [list(row) for i in range(self._size[0])]
