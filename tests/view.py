@@ -1,4 +1,5 @@
 import sys
+from typing import Match
 from unittest.signals import registerResult
 sys.path.append('../src')
 
@@ -7,7 +8,7 @@ from unittest.mock import MagicMock
 from modules.view import View
 
 class ViewTests(unittest.TestCase):
-  
+
   def setUp(self):
     '''Setup tests'''
     controller = MagicMock()
@@ -36,4 +37,27 @@ class ViewTests(unittest.TestCase):
     object = self.view.draw(10, 10, 0)
     self.assertEqual(object, None)
 
+  def test_inboundsMouseDraw(self):
+    '''Tests mouse draw'''
+    self.view.controller.getLifemapSize = MagicMock(return_value=(5, 5))
+    self.view.showMainWindow()
+    initialObjectIds = self.view.cvsCells.find_all()
+
+    cellSize = self.view.CELL_SIZE
+    motionEvent = MagicMock()
+    i, j = 0, 4
+    motionEvent.x = int(j * cellSize + cellSize // 2)
+    motionEvent.y = int(i * cellSize + cellSize // 2)
+    self.view.on_CvsCells_HoldingMouseOver(motionEvent)
+
+    currentObjectIds = self.view.cvsCells.find_all()
+    objectsDiff = [*filter(lambda id: id not in initialObjectIds, currentObjectIds)]
+    self.assertTrue(len(objectsDiff) == 1)
+
+    newObjectId = objectsDiff[0]
+    newObjectCoords = self.view.cvsCells.coords(newObjectId)
+    print(newObjectCoords)
+    x0, y0 = j * cellSize, i * cellSize
+    x1, y1 = x0 + cellSize, y0 + cellSize
+    self.assertEqual(newObjectCoords, [x0, y0, x1, y1])
   
