@@ -101,7 +101,7 @@ class View(tk.Frame):
     '''Fills (i,j) cell with color with colorIndex'''
     x0, y0 = j * CELL_SIZE, i * CELL_SIZE
     color = colorMap[colorIndex]
-    self.cvsCells.create_rectangle(x0, y0, x0 + CELL_SIZE, y0 + CELL_SIZE, fill=color, outline='#eee')
+    return self.cvsCells.create_rectangle(x0, y0, x0 + CELL_SIZE, y0 + CELL_SIZE, fill=color, outline='#eee')
 
   def refreshScene(self):
     '''Refreshes cells.'''
