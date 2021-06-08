@@ -6,6 +6,7 @@ sys.path.append('../src')
 import unittest
 from unittest.mock import MagicMock
 from modules.view import View
+from tkinter import Canvas
 
 class ViewTests(unittest.TestCase):
 
@@ -15,6 +16,12 @@ class ViewTests(unittest.TestCase):
     controller.getLifemapSize = MagicMock(return_value=(50, 50))
 
     self.view = View(controller)
+
+  def test_windowsTransfer(self):
+    with self.assertRaises(AttributeError):
+      self.view.cvsCells
+    self.view.showMainWindow()
+    self.assertEqual(type(self.view.cvsCells), Canvas)
 
   def test_inboundsDraw(self):
     '''Inbounds draw test'''
