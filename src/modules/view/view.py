@@ -44,7 +44,7 @@ class View(tk.Frame):
         self.synRuleSetupList()
 
         # Set up window
-        self.master.title(_('Welcome to the Cell World!'))
+        self.master.title(_('Welcome to the Cell World!')) # noqa
         self.destroyAllWidgets()
 
         # Set up widgets
@@ -62,7 +62,7 @@ class View(tk.Frame):
 
         self.btnEnter = tk.Button(
             self,
-            text=_('Enter!'),
+            text=_('Enter!'), # noqa
             command=self.showMainWindow
         )
         self.btnEnter.pack()
@@ -109,8 +109,8 @@ class View(tk.Frame):
         hasAnyColor = hasattr(self, "chosenColors")
         if not hasAnyColor:
             messagebox.showerror(
-                _('No chosen colors'),
-                _('Choose any color to continue')
+                _('No chosen colors'), # noqa
+                _('Choose any color to continue') # noqa
             )
             return
 
@@ -126,7 +126,7 @@ class View(tk.Frame):
         self.lifemapSize = RectangleSize(*self.controller.getLifemapSize())
 
         # Set up window
-        self.master.title(_('Cell World...'))
+        self.master.title(_('Cell World...')) # noqa
         self.destroyAllWidgets()
 
         # Init widgets
@@ -136,16 +136,16 @@ class View(tk.Frame):
             height=self.lifemapSize.height * View.CELL_SIZE
         )
         self.cvsCells.bind('<B1-Motion>', self.on_CvsCells_HoldingMouseOver)
-        self.btnStart = tk.Button(self, text=_('Start'), command=self.startLife)
+        self.btnStart = tk.Button(self, text=_('Start'), command=self.startLife) # noqa
         self.btnStop = tk.Button(
             self,
-            text=_('Stop'),
+            text=_('Stop'), # noqa
             command=self.stopLife,
             state='disabled'
         )
         self.btnExit = tk.Button(
             self,
-            text=_('Exit'),
+            text=_('Exit'), # noqa
             command=self.showWelcomeWindow
         )
         cbValues = [
