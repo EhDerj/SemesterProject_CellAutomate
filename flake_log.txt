@@ -1,0 +1,80 @@
+src/main.py:7:3: E111 indentation is not a multiple of four
+src/main.py:8:3: E111 indentation is not a multiple of four
+src/main.py:10:3: E111 indentation is not a multiple of four
+src/main.py:11:3: E111 indentation is not a multiple of four
+src/main.py:12:3: E111 indentation is not a multiple of four
+src/main.py:14:3: E111 indentation is not a multiple of four
+src/utils/colors.py:26:35: W292 no newline at end of file
+src/utils/colorMap.py:26:80: E501 line too long (98 > 79 characters)
+src/utils/colorMap.py:36:1: W391 blank line at end of file
+src/modules/controller/__init__.py:1:1: F405 'Controller' may be undefined, or defined from star imports: .controller
+src/modules/controller/__init__.py:3:1: F403 'from .controller import *' used; unable to detect undefined names
+src/modules/controller/__init__.py:3:26: W292 no newline at end of file
+src/modules/controller/controller.py:3:3: E111 indentation is not a multiple of four
+src/modules/controller/controller.py:4:1: W293 blank line contains whitespace
+src/modules/controller/controller.py:5:3: E111 indentation is not a multiple of four
+src/modules/controller/controller.py:9:3: E111 indentation is not a multiple of four
+src/modules/controller/controller.py:13:1: W391 blank line at end of file
+src/modules/model/rulesNearCells.py:3:1: E302 expected 2 blank lines, found 1
+src/modules/model/rulesNearCells.py:5:80: E501 line too long (110 > 79 characters)
+src/modules/model/rulesNearCells.py:41:40: E701 multiple statements on one line (colon)
+src/modules/model/rulesNearCells.py:41:80: E501 line too long (86 > 79 characters)
+src/modules/model/lifeMap.py:4:1: E402 module level import not at top of file
+src/modules/model/lifeMap.py:9:80: E501 line too long (95 > 79 characters)
+src/modules/model/lifeMap.py:19:80: E501 line too long (89 > 79 characters)
+src/modules/model/lifeMap.py:48:80: E501 line too long (80 > 79 characters)
+src/modules/model/rulesSquares.py:3:1: E302 expected 2 blank lines, found 1
+src/modules/model/rulesSquares.py:5:80: E501 line too long (100 > 79 characters)
+src/modules/model/rulesSquares.py:27:80: E501 line too long (91 > 79 characters)
+src/modules/model/rulesSquares.py:52:1: W391 blank line at end of file
+src/modules/model/rulesSquares.py:52:1: W293 blank line contains whitespace
+src/modules/model/model.py:4:1: E302 expected 2 blank lines, found 1
+src/modules/model/model.py:6:80: E501 line too long (97 > 79 characters)
+src/modules/model/model.py:21:80: E501 line too long (87 > 79 characters)
+src/modules/model/model.py:41:80: E501 line too long (83 > 79 characters)
+src/modules/model/ruleManager.py:3:1: E302 expected 2 blank lines, found 1
+src/modules/model/ruleManager.py:15:80: E501 line too long (87 > 79 characters)
+src/modules/view/view.py:17:3: E111 indentation is not a multiple of four
+src/modules/view/view.py:19:3: E111 indentation is not a multiple of four
+src/modules/view/view.py:30:7: E111 indentation is not a multiple of four
+src/modules/view/view.py:32:7: E111 indentation is not a multiple of four
+src/modules/view/view.py:34:80: E501 line too long (84 > 79 characters)
+src/modules/view/view.py:38:3: E111 indentation is not a multiple of four
+src/modules/view/view.py:41:8: E111 indentation is not a multiple of four
+src/modules/view/view.py:42:1: W293 blank line contains whitespace
+src/modules/view/view.py:43:3: E111 indentation is not a multiple of four
+src/modules/view/view.py:46:1: W293 blank line contains whitespace
+src/modules/view/view.py:54:7: E111 indentation is not a multiple of four
+src/modules/view/view.py:54:42: E251 unexpected spaces around keyword / parameter equals
+src/modules/view/view.py:54:44: E251 unexpected spaces around keyword / parameter equals
+src/modules/view/view.py:54:60: E251 unexpected spaces around keyword / parameter equals
+src/modules/view/view.py:54:62: E251 unexpected spaces around keyword / parameter equals
+src/modules/view/view.py:54:80: E501 line too long (83 > 79 characters)
+src/modules/view/view.py:55:7: E111 indentation is not a multiple of four
+src/modules/view/view.py:56:7: E111 indentation is not a multiple of four
+src/modules/view/view.py:59:1: W293 blank line contains whitespace
+src/modules/view/view.py:60:3: E111 indentation is not a multiple of four
+src/modules/view/view.py:62:80: E501 line too long (80 > 79 characters)
+src/modules/view/view.py:64:7: E111 indentation is not a multiple of four
+src/modules/view/view.py:65:7: E111 indentation is not a multiple of four
+src/modules/view/view.py:68:80: E501 line too long (85 > 79 characters)
+src/modules/view/view.py:70:80: E501 line too long (165 > 79 characters)
+src/modules/view/view.py:75:1: W293 blank line contains whitespace
+src/modules/view/view.py:77:80: E501 line too long (121 > 79 characters)
+src/modules/view/view.py:79:80: E501 line too long (88 > 79 characters)
+src/modules/view/view.py:89:3: E111 indentation is not a multiple of four
+src/modules/view/view.py:92:7: E111 indentation is not a multiple of four
+src/modules/view/view.py:95:80: E501 line too long (106 > 79 characters)
+src/modules/view/view.py:96:1: W293 blank line contains whitespace
+src/modules/view/view.py:97:3: E111 indentation is not a multiple of four
+src/modules/view/view.py:100:80: E501 line too long (184 > 79 characters)
+src/modules/view/view.py:102:3: E111 indentation is not a multiple of four
+src/modules/view/view.py:111:3: E111 indentation is not a multiple of four
+src/modules/view/view.py:115:1: W293 blank line contains whitespace
+src/modules/view/view.py:116:3: E111 indentation is not a multiple of four
+src/modules/view/view.py:119:7: E111 indentation is not a multiple of four
+src/modules/view/view.py:120:7: E111 indentation is not a multiple of four
+src/modules/view/view.py:122:7: E111 indentation is not a multiple of four
+src/modules/view/view.py:123:7: E111 indentation is not a multiple of four
+src/modules/view/__init__.py:1:1: F405 'View' may be undefined, or defined from star imports: .view
+src/modules/view/__init__.py:3:1: F403 'from .view import *' used; unable to detect undefined names
