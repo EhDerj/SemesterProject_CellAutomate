@@ -12,8 +12,10 @@ class Colors:
         Swaps the numerical ID for <color>: str
     """
     def __init__(self, colorSeq):
-        self.colors = { colorSeq[i] : i for i in range(len(colorSeq)) }
-        self.colors.update({ colorSeq[i] : i for i in self.colors })
+        colorSeq = filter(lambda x: x != '', colorSeq)
+        self.colors = { x : i for i, x in enumerate(colorSeq) }
+        self.colors.update({ i : x for i, x in enumerate(colorSeq) })
+        print(self.colors)
 
     def swapColor(self, nameID):
         return self.colors[nameID]
