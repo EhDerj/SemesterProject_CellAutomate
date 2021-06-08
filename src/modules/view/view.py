@@ -3,6 +3,9 @@ import tkinter as tk
 from tkinter import ttk, END
 from tkinter import messagebox
 from utils.types import RectangleSize
+import gettext
+
+gettext.install("click", ".", names=("gettext",))
 
 
 class View(tk.Frame):
@@ -41,7 +44,7 @@ class View(tk.Frame):
         self.synRuleSetupList()
 
         # Set up window
-        self.master.title('Welcome to the Cell World!')
+        self.master.title(_('Welcome to the Cell World!'))
         self.destroyAllWidgets()
 
         # Set up widgets
@@ -59,7 +62,7 @@ class View(tk.Frame):
 
         self.btnEnter = tk.Button(
             self,
-            text='Enter!',
+            text=_('Enter!'),
             command=self.showMainWindow
         )
         self.btnEnter.pack()
@@ -106,8 +109,8 @@ class View(tk.Frame):
         hasAnyColor = len(self.chosenColors) > 0
         if not hasAnyColor:
             messagebox.showerror(
-                'No chosen colors',
-                'Choose any color to continue'
+                _('No chosen colors'),
+                _('Choose any color to continue')
             )
             return
 
@@ -123,7 +126,7 @@ class View(tk.Frame):
         self.lifemapSize = RectangleSize(*self.controller.getLifemapSize())
 
         # Set up window
-        self.master.title('Cell World...')
+        self.master.title(_('Cell World...'))
         self.destroyAllWidgets()
 
         # Init widgets
@@ -133,16 +136,16 @@ class View(tk.Frame):
             height=self.lifemapSize.height * View.CELL_SIZE
         )
         self.cvsCells.bind('<B1-Motion>', self.on_CvsCells_HoldingMouseOver)
-        self.btnStart = tk.Button(self, text='Start', command=self.startLife)
+        self.btnStart = tk.Button(self, text=_('Start'), command=self.startLife)
         self.btnStop = tk.Button(
             self,
-            text='Stop',
+            text=_('Stop'),
             command=self.stopLife,
             state='disabled'
         )
         self.btnExit = tk.Button(
             self,
-            text='Exit',
+            text=_('Exit'),
             command=self.showWelcomeWindow
         )
         cbValues = [
