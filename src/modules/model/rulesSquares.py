@@ -11,15 +11,17 @@ class RulesSquares(RuleManager):
 
     Methods
     _______
-    __init__(rlDict)
-        >rlDict: dictionary of rules^ used for coloring
+    __init__(defaultColor, rules)
+        >defaultColor: colorID which return default or None for no default action
+        >rules: dictionary of rules^ used for coloring
 
     compute(x, y, lifeMap)
         computes the color at cell (x, y)
         with consideration of lifeMap settings
     """
-    def __init__(self, rlDict):
-        self.rules = rlDict
+    def __init__(self, defaultColor, rules):
+        self.defaultColor = defaultColor
+        self.rules = rules
         self.computed = dict()
 
     def compute(self, x, y, lifeMap):
@@ -43,8 +45,10 @@ class RulesSquares(RuleManager):
         )
         if tup in self.rules:
             a, b, c, d = self.rules[tup]
-        else:
+        elif self.defaultColor is None:
             a, b, c, d = tup
+        else:
+            a = b = c = d = self.defaultColor
         self.computed[(x+1, y+0)] = b
         self.computed[(x+0, y+1)] = c
         self.computed[(x+1, y+1)] = d
