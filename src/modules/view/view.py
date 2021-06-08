@@ -75,6 +75,7 @@ class View(tk.Frame):
     
     # Set up widgets
     self.cvsCells = tk.Canvas(self, width=self.lifemapSize.width * CELL_SIZE, height=self.lifemapSize.height * CELL_SIZE)
+    self.cvsCells.bind('<B1-Motion>', self.on_CvsCells_HoldingMouseOver)
     self.btnStart = tk.Button(self, text='Start', command=self.startLife)
     self.btnStop = tk.Button(self, text='Stop', command=self.stopLife, state='disabled')
     self.btnExit = tk.Button(self, text='Exit', command=self.showWelcomeWindow)
@@ -86,14 +87,18 @@ class View(tk.Frame):
     self.refreshMap()
     self.refreshScene()
 
+  def draw(self, i, j, colorIndex):
+    '''Fill (i,j) cell with color with colorIndex'''
+    x0, y0 = j * CELL_SIZE, i * CELL_SIZE
+    color = colorMap[colorIndex]
+    self.cvsCells.create_rectangle(x0, y0, x0 + CELL_SIZE, y0 + CELL_SIZE, fill=color, outline='#eee')
+
   def refreshScene(self):
     '''Refreshes cells.'''
     self.cvsCells.delete('all')
     for i, row in enumerate(self.map):
       for j, colorIndex in enumerate(row):
-        x0, y0 = j * CELL_SIZE, i * CELL_SIZE
-        color = colorMap[colorIndex]
-        self.cvsCells.create_rectangle(x0, y0, x0 + CELL_SIZE, y0 + CELL_SIZE, fill=color, outline='#eee')
+        self.draw(i, j, colorIndex)
   
   def refreshMap(self):
     '''Requests fresh map from model.'''
@@ -122,3 +127,11 @@ class View(tk.Frame):
 
       self.btnStart['state'] = 'normal'
       self.btnStop['state'] = 'disabled'
+
+  def on_CvsCells_HoldingMouseOver(self, e):
+    '''Handling mouse motion on canvas with holded left button'''
+    width, height = self.lifemapSize
+    i, j = e.y // CELL_SIZE, e.x // CELL_SIZE
+    if i >= 0 and i < height and j >= 0 and j < width:
+      self.map[i][j] = 2
+      self.draw(i, j, 2)
