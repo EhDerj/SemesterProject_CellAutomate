@@ -10,7 +10,7 @@ class View(tk.Frame):
     """Cell automate GUI."""
 
     CELL_SIZE = 10
-    LIFE_DELAY = 500
+    LIFE_DELAY = 250
 
     def __init__(self, controller):
         """Create root window with frame, tune weight and resize."""
@@ -207,7 +207,6 @@ class View(tk.Frame):
         """Start life."""
         self.isLifeStarted = True
         self.controller.setCellMatrix(self.map)
-        print(self.controller.model.lifeMap.cellMatrix[0])
         self.iterateLifeLoop()
 
     def stopLife(self):

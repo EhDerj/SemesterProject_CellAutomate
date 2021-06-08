@@ -1,8 +1,9 @@
 import modules.model.model
-import modules.model.ruleManager
+from modules.model.rulesNearCells import RulesNearCells
+from modules.model.rulesSquares import RulesSquares
 import modules.model.lifeMap
 import utils.colors
-from os import listdir
+from os import error, listdir
 from os.path import isfile, join
 
 class Controller:
@@ -50,16 +51,15 @@ class Controller:
   def getRuleFiles(self):
     onlyfiles = [f for f in listdir('./rules') if isfile(join('./rules', f))]
     self.retVal = []
+    k = 0
     for i in onlyfiles:
-      k = 0
       with open("rules/%s" % i, "r") as f:
         self.col = f.readline().replace("\n", " ").split(" ")
-        
-        self.typeRules = f.readline().replace("\n", " ").split(" ")
-        self.rlDict = eval(f.read())
+        typeRules = f.readline().replace("\n", " ").split(" ")
+        rlDict = eval(f.read())
         
       self.Colors = utils.colors.Colors(self.col)
-      self.retVal.append((i, k, self.Colors))
+      self.retVal.append((i, k, self.Colors, typeRules, rlDict))
       k += 1
     return self.retVal
 
@@ -72,13 +72,17 @@ class Controller:
   def initModel(self, ruleIndex):
     self.Colors = utils.colors.Colors(self.col)
     for i in self.retVal:
-      if i[0] == ruleIndex:
-        if self.typeRules[0] == "Moore":
-          self.model.ruleManager = RulesNearCells(len(self.col), int(self.typeRules[1]), True, self.rlDict)
-        elif self.typeRules[0] == "vonNeumann":
-          self.model.ruleManager = RulesNearCells(len(self.col), int(self.typeRules[1]), False, self.rlDict)
-        elif self.typeRules[0] == "margolis":
-          self.model.ruleManager = RulesSquares(int(self.typeRules[1]), self.rlDict)
+      if i[1] == ruleIndex:
+        typeRules = self.retVal[ruleIndex][3]
+        rlDict = self.retVal[ruleIndex][4]
+        if typeRules[0] == "Moore":
+          self.model.ruleManager = RulesNearCells(len(self.col), int(typeRules[1]), True, rlDict)
+        elif typeRules[0] == "VonNeumann":
+          self.model.ruleManager = RulesNearCells(len(self.col), int(typeRules[1]), False, rlDict)
+        elif typeRules[0] == "Margolis":
+          self.model.ruleManager = RulesSquares(int(typeRules[1]) if typeRules[1] != "None" else None, rlDict)
+        else:
+          raise 'Ne zashol!'
 
   def setCellMatrix(self, cellMatrix):
     self.model.lifeMap.setCellMatrix(cellMatrix)
