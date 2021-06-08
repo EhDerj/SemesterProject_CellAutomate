@@ -20,6 +20,9 @@ class RulesNearCells(RuleManager):
     compute(x, y, lifeMap)
         computes the color at cell (x, y)
         with consideration of lifeMap settings
+
+    changeMode()
+        does nothing in this manager type
     """
 
     def __init__(self, colorsNum, defaultColor, flagMoore, rules):
@@ -56,3 +59,9 @@ class RulesNearCells(RuleManager):
             return lifeMap.getCell(x, y)
         else:
             return self.defaultColor
+
+    def changeMode(self):
+        """
+    This type of neighbouhood have only one mode
+        """
+        pass
