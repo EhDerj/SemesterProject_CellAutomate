@@ -2,8 +2,30 @@ from colors import Colors
 
 class LifeMap:
     """
+    LifeMap is an interactive class that contains basic information for building colored matrix
 
+    Attributes
+    ----------
+    size:
+        sets the size of the single tuple in lifeMap
+
+    borderTrough: bool
+        Matrix border seettring:
+            >TRUE: Enclosed for itself
+            >FALSE: Enclosed for emptiness (all out-of-border cells are considered white)
+
+    Methods
+    ----------
+    getsSize()
+        gets the size of the object
+    setCell(m,n, colorID)
+        sets the colorID in cell (m,n)
+    getCell(m,n)
+        retrieves the color of the cell with consideration of borders
+    getColorMatrix()
+        retrieves the "colored" interactive matrix
     """
+
     def __init__(self, size, borderTrough=False):
         self._size = tuple(size)
         self.currentColors = Colors()
