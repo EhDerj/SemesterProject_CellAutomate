@@ -18,11 +18,15 @@ class RulesSquares(RuleManager):
     compute(x, y, lifeMap)
         computes the color at cell (x, y)
         with consideration of lifeMap settings
+
+    changeMode()
+        move computing grid for 1 cell diagonal
     """
     def __init__(self, defaultColor, rules):
         self.defaultColor = defaultColor
         self.rules = rules
         self.computed = dict()
+        self.shift = True
 
     def compute(self, x, y, lifeMap):
         """
@@ -37,20 +41,37 @@ class RulesSquares(RuleManager):
             n = self.computed[(x, y)]
             del self.computed[(x, y)]
             return n
+        grid = (
+            (x+0, y+0),
+            (x+1, y+0),
+            (x+0, y+1),
+            (x+1, y+1),
+        ) if self.shift else(
+            (x-1, y-1),
+            (x+0, y-1),
+            (x-1, y+0),
+            (x+0, y+0),
+        )
         tup = (
-            lifeMap.getCell(x+0, y+0),
-            lifeMap.getCell(x+1, y+0),
-            lifeMap.getCell(x+0, y+1),
-            lifeMap.getCell(x+1, y+1),
+            lifeMap.getCell(*grid[0]),
+            lifeMap.getCell(*grid[1]),
+            lifeMap.getCell(*grid[2]),
+            lifeMap.getCell(*grid[3]),
         )
         if tup in self.rules:
-            a, b, c, d = self.rules[tup]
-        elif self.defaultColor is None:
-            a, b, c, d = tup
-        else:
-            a = b = c = d = self.defaultColor
-        self.computed[(x+1, y+0)] = b
-        self.computed[(x+0, y+1)] = c
-        self.computed[(x+1, y+1)] = d
-        return a
-        
+            tup = self.rules[tup]
+        elif self.defaultColor is not None:
+            tup = (self.defaultColor, )*4
+        self.computed[grid[0]],\
+        self.computed[grid[1]],\
+        self.computed[grid[2]],\
+        self.computed[grid[3]] = tup
+        n = self.computed[(x, y)]
+        del self.computed[(x, y)]
+        return n
+
+    def changeMode(self):
+        """
+    Changes if it's need to shift computing grid
+        """
+        self.shift = not self.shift
