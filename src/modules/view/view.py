@@ -1,11 +1,13 @@
 """Cell automate view."""
+import os
 import tkinter as tk
 from tkinter import ttk, END
 from tkinter import messagebox
 from utils.types import RectangleSize
 import gettext
 
-gettext.install("click", ".", names=("gettext",))
+_ = gettext.gettext
+gettext.install("click", os.path.dirname("src/modules/view/ru"), names=("ngettext",))
 
 
 class View(tk.Frame):
