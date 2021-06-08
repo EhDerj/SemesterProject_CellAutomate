@@ -30,6 +30,7 @@ class View(tk.Frame):
       self.rowconfigure(row, weight=1)
 
     self.chosenColor = tk.IntVar()
+    self.isLifeStarted = False
     self.showWelcomeWindow()
 
   def destroyAllWidgets(self):
@@ -39,6 +40,7 @@ class View(tk.Frame):
           
   def showWelcomeWindow(self):
     '''Show welcome window.'''
+    self.stopLife()
     
     # Set up window
     self.master.title('Добро пожаловать в клеточный мир!')
@@ -66,7 +68,7 @@ class View(tk.Frame):
     
     # Set up widgets
     self.cvsCells = tk.Canvas(self, width=self.lifemapSize.width * CELL_SIZE, height=self.lifemapSize.height * CELL_SIZE)
-    self.btnStart = tk.Button(self, text='Start', command=self.iterateLifeLoop)
+    self.btnStart = tk.Button(self, text='Start', command=self.startLife)
     self.btnStop = tk.Button(self, text='Stop', command=self.stopLife, state='disabled')
     self.btnExit = tk.Button(self, text='Exit', command=self.showWelcomeWindow)
     self.cvsCells.grid()
@@ -98,10 +100,17 @@ class View(tk.Frame):
 
     self.btnStart['state'] = 'disabled'
     self.btnStop['state'] = 'normal'
+
+  def startLife(self):
+    '''Starts life.'''
+    self.isLifeStarted = True
+    self.iterateLifeLoop()
     
   def stopLife(self):
     '''Starts life.'''
-    self.after_cancel(self.lifeLoopId)
+    if self.isLifeStarted:
+      self.isLifeStarted = False
+      self.after_cancel(self.lifeLoopId)
 
-    self.btnStart['state'] = 'normal'
-    self.btnStop['state'] = 'disabled'
+      self.btnStart['state'] = 'normal'
+      self.btnStop['state'] = 'disabled'
