@@ -44,6 +44,7 @@ class View(tk.Frame):
   def showWelcomeWindow(self):
     '''Show welcome window.'''
     self.stopLife()
+    self.refreshRuleSetupList()
     
     # Set up window
     self.master.title('Добро пожаловать в клеточный мир!')
@@ -57,6 +58,10 @@ class View(tk.Frame):
       self.cbColors.append(rbColor)
     self.btnEnter = tk.Button(self, text='Enter!', command=self.showMainWindow)
     self.btnEnter.pack()
+    self.lbRuleSetups = tk.Listbox(self)
+    for index, (ruleFilename, ruleId) in enumerate(self.ruleSetupList):
+      self.lbRuleSetups.insert(index, ruleFilename)
+    self.lbRuleSetups.pack()
     
   def showMainWindow(self):
     '''Show main window.'''
@@ -110,6 +115,10 @@ class View(tk.Frame):
     '''Requests fresh map from model.'''
     self.iteration += 1
     self.map = [[[0, *self.mapColorIndices][(i + j + self.iteration) % (len(self.mapColorIndices) + 1)] for j in range(self.lifemapSize.width)] for i in range(self.lifemapSize.height)]
+
+  def refreshRuleSetupList(self):
+    '''Refreshes rule setup list.'''
+    self.ruleSetupList = [('rules1.txt', 1), ('second_rules.txt', 2), ]
 
   def iterateLifeLoop(self):
     '''Iterates life by refreshing map and scene.'''
