@@ -1,6 +1,7 @@
 import modules.model.model
 import modules.model.ruleManager
 import modules.model.lifeMap
+import utils.colors
 from os import listdir
 from os.path import isfile, join
 
@@ -27,29 +28,29 @@ class Controller:
     for i in onlyfiles:
       k = 0
       with open(i, "r") as f:
-        col = f.readline().replace("\n", " ").split(" ")
-        self.model.Colors(col)
+        self.col = f.readline().replace("\n", " ").split(" ")
         self.typeRules = f.readline().replace("\n", " ").split(" ")
         self.rlDict = eval(f.read())
         
       self.retVal.append((i, k, col))
       k += 1
-    return retVal
+    return self.retVal
 
   def setLifemapSize(self, width, height):
     ''' '''
     currentLifemap = self.model.getLifeMap()
     currentLifemap._size = tuple(width, height)
   
-  def initModel(ruleIndex):
+  def initModel(self, ruleIndex):
+    self.Colors = utils.colors.Colors(self.col)
     for i in self.retVal:
       if i[0] == ruleIndex:
         if self.typeRules[0] == "Moore":
-          self.model.ruleManager = RulesNearCells(self.rlDict, True)
-        elif .selftypeRules[0] == "vonNeumann":
-          self.model.ruleManager = RulesNearCells(self.rlDict, False)
+          self.model.ruleManager = RulesNearCells(len(self.col), int(self.typeRules[1]), True, self.rlDict)
+        elif self.typeRules[0] == "vonNeumann":
+          self.model.ruleManager = RulesNearCells(len(self.col), int(self.typeRules[1]), False, self.rlDict)
         elif self.typeRules[0] == "margolis":
-          self.model.ruleManager = RulesSquares(self.rlDict)
+          self.model.ruleManager = RulesSquares(int(self.typeRules[1]), self.rlDict)
 
   def setLifeMap(self, lifeMap):
-    model.lifeMap = lifeMap
+    self.model.lifeMap = lifeMap
