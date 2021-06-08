@@ -1,6 +1,6 @@
 """Cell automate view."""
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, END
 from utils.colors import Colors
 from tkinter import messagebox
 from utils.types import RectangleSize
@@ -40,42 +40,27 @@ class View(tk.Frame):
     def showWelcomeWindow(self):
         """Show welcome window."""
         self.stopLife()
-        self.refreshRuleSetupList()
+        self.synRuleSetupList()
 
         # Set up window
         self.master.title('Welcome to the Cell World!')
         self.destroyAllWidgets()
 
-        # Set up widgets
-        self.cbColors = []
-        for i, color in enumerate(self.colors):
-            rbColor = tk.Checkbutton(
-                self,
-                text=color,
-                variable=self.chosenColors[i]
-            )
-            rbColor.pack()
-            self.cbColors.append(rbColor)
-            
+        # Set up widgets    
+        self.lbRuleSetups = tk.Listbox(self)
+        self.lbRuleSetups.bind('<<ListboxSelect>>', self.on_lbRuleSetups_Select)
+        self.refreshLbRuleSetups()
+        self.lbRuleSetups.pack()
+
+        self.lbColors = tk.Listbox(self, selectmode='multiple')
+        self.lbColors.pack()
+
         self.btnEnter = tk.Button(
             self,
             text='Enter!',
             command=self.showMainWindow
         )
         self.btnEnter.pack()
-        self.lbRuleSetups = tk.Listbox(self)
-        self.lbRuleSetups.bind('<<ListboxSelect>>', self.on_lbRuleSetups_Select)
-        self.refreshLbRuleSetups()
-        self.lbRuleSetups.pack()
-
-    def on_lbRuleSetups_Select(self, e):
-        """Handle rule setups list box select."""
-        print(e)
-        self.chosenColors = []
-        for i, x in enumerate(self.colors):
-            colorIntVar = tk.IntVar(self, int(i == 0))
-            self.chosenColors.append(colorIntVar)
-        
 
     def refreshLbRuleSetups(self):
         """Refresh listbox rule setups."""
@@ -84,15 +69,26 @@ class View(tk.Frame):
             ruleSourceFilename = ruleSetup[0]
             self.lbRuleSetups.insert(index, ruleSourceFilename)
 
-    def refreshRuleSetupList(self):
-        """Refresh rule setup list."""
-        res = self.controller.getRuleFiles()
-        print(res)
-
-        self.colors = [color for color in res][1:len(res) // 2]
-        self.colorMap = res
-        self.ruleSetupList = res
+    def refreshLbColors(self):
+        """Refresh listbox rule setups."""
+        selectedRuleSetup = self.ruleSetupList[self.selectedRuleSetupIndex]
+        colorsInstance = selectedRuleSetup[2]
+        self.colorMap = colorsInstance.colors
+        self.colors = colorsInstance.colorSeq[1:]
         
+        self.lbColors.delete(0, END)
+        for i, color in enumerate(self.colors):
+            self.lbColors.insert(i, color)
+        
+
+    def synRuleSetupList(self):
+        """Refresh rule setup list."""
+        self.ruleSetupList = self.controller.getRuleFiles()
+        
+    def on_lbRuleSetups_Select(self, e):
+        """Handle rule setups list box select."""
+        self.selectedRuleSetupIndex = self.lbRuleSetups.curselection()[0]
+        self.refreshLbColors()
 
     # Main
 
