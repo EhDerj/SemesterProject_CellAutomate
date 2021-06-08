@@ -1,4 +1,4 @@
-White Black
+White Black Red Yellow Blue
 Moore 0
 {
 (0, (5, 3)): 1,
