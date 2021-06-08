@@ -1,7 +1,6 @@
 """Cell automate view."""
 import tkinter as tk
 from tkinter import ttk, END
-from utils.colors import Colors
 from tkinter import messagebox
 from utils.types import RectangleSize
 
@@ -26,7 +25,6 @@ class View(tk.Frame):
         for row in range(self.grid_size()[1]):
             self.rowconfigure(row, weight=1)
 
-        
         self.isLifeStarted = False
         self.showWelcomeWindow()
 
@@ -46,9 +44,12 @@ class View(tk.Frame):
         self.master.title('Welcome to the Cell World!')
         self.destroyAllWidgets()
 
-        # Set up widgets    
+        # Set up widgets
         self.lbRuleSetups = tk.Listbox(self)
-        self.lbRuleSetups.bind('<<ListboxSelect>>', self.on_lbRuleSetups_Select)
+        self.lbRuleSetups.bind(
+          '<<ListboxSelect>>',
+          self.on_lbRuleSetups_Select,
+        )
         self.refreshLbRuleSetups()
         self.lbRuleSetups.pack()
 
@@ -76,7 +77,7 @@ class View(tk.Frame):
         colorsInstance = selectedRuleSetup[2]
         self.colorMap = colorsInstance.colors
         self.colors = colorsInstance.colorSeq[1:]
-        
+
         self.lbColors.delete(0, END)
         for i, color in enumerate(self.colors):
             self.lbColors.insert(i, color)
@@ -84,7 +85,7 @@ class View(tk.Frame):
     def synRuleSetupList(self):
         """Refresh rule setup list."""
         self.ruleSetupList = self.controller.getRuleFiles()
-        
+
     def on_lbRuleSetups_Select(self, e):
         """Handle rule setups list box select."""
         curSelection = self.lbRuleSetups.curselection()
