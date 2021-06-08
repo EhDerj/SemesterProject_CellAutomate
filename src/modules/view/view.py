@@ -47,7 +47,7 @@ class View(tk.Frame):
     self.refreshRuleSetupList()
     
     # Set up window
-    self.master.title('Добро пожаловать в клеточный мир!')
+    self.master.title('Welcome to the Cell World!')
     self.destroyAllWidgets()
 
     # Set up widgets
@@ -59,8 +59,9 @@ class View(tk.Frame):
     self.btnEnter = tk.Button(self, text='Enter!', command=self.showMainWindow)
     self.btnEnter.pack()
     self.lbRuleSetups = tk.Listbox(self)
-    for index, (ruleFilename, ruleId) in enumerate(self.ruleSetupList):
-      self.lbRuleSetups.insert(index, ruleFilename)
+    for index, ruleSetup in enumerate(self.ruleSetupList):
+      ruleSourceFilename = ruleSetup[0]
+      self.lbRuleSetups.insert(index, ruleSourceFilename)
     self.lbRuleSetups.pack()
     
   def showMainWindow(self):
@@ -76,7 +77,7 @@ class View(tk.Frame):
     self.mapColorIndices = list(filter(lambda x: x >= 0, [1 + colorIndex if isChoosed.get() == 1 else -1 for colorIndex, isChoosed in enumerate(self.chosenColors)]))
 
     # Set up window
-    self.master.title('Клеточный мир!')
+    self.master.title('Cell World...')
     self.destroyAllWidgets()
     
     # Init widgets
@@ -99,7 +100,7 @@ class View(tk.Frame):
     self.refreshScene()
 
   def draw(self, i, j, colorIndex):
-    '''Fill (i,j) cell with color with colorIndex'''
+    '''Fills (i,j) cell with color with colorIndex'''
     x0, y0 = j * CELL_SIZE, i * CELL_SIZE
     color = colorMap[colorIndex]
     self.cvsCells.create_rectangle(x0, y0, x0 + CELL_SIZE, y0 + CELL_SIZE, fill=color, outline='#eee')
