@@ -119,7 +119,7 @@ class View(tk.Frame):
         self.iteration = 0
         chosenColorIndices = list(map(lambda x: 1 + x, self.chosenColors))
         self.mapColorIndices = chosenColorIndices
-        self.controller.initModel(self.selectedRuleSetupIndex)
+        self.controller.initModel(self.selectedRuleSetupIndex, len(self.chosenColors) + 1)
         self.lifemapSize = RectangleSize(*self.controller.getLifemapSize())
 
         # Set up window
