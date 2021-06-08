@@ -52,11 +52,10 @@ class Controller:
         self.retVal = []
         k = 0
         for i in onlyfiles:
-        with open("rules/%s" % i, "r") as f:
-            ''' '''
-            col = f.readline().replace("\n", " ").split(" ")[:-1]
-            typeRules = f.readline().replace("\n", " ").split(" ")
-            rlDict = eval(f.read())
+            with open("rules/%s" % i, "r") as f:
+                col = f.readline().replace("\n", " ").split(" ")[:-1]
+                typeRules = f.readline().replace("\n", " ").split(" ")
+                rlDict = eval(f.read())
         Colors = utils.colors.Colors(col)
         self.retVal.append((i, k, Colors, typeRules, rlDict, col))
         k += 1
@@ -69,22 +68,21 @@ class Controller:
 
     def initModel(self, ruleIndex, colorsCount):
         for i in self.retVal:
-        if i[1] == ruleIndex:
-            ''' '''
-            print(self.retVal[ruleIndex])
-            typeRules = self.retVal[ruleIndex][3]
-            rlDict = self.retVal[ruleIndex][4]
-            col = self.retVal[ruleIndex][5]
-            defaultColor = int(typeRules[1]) if typeRules[1] != "None" else None
-            if typeRules[0] == "Moore":
-                self.model.ruleManager = RulesNearCells(colorsCount, defaultColor, True, rlDict)
-                print(self.model.ruleManager)
-            elif typeRules[0] == "VonNeumann":
-                self.model.ruleManager = RulesNearCells(colorsCount, defaultColor, False, rlDict)
-            elif typeRules[0] == "Margolis":
-                self.model.ruleManager = RulesSquares(defaultColor, rlDict)
-            else:
-                raise 'Ne zashol!'
+            if i[1] == ruleIndex:
+                print(self.retVal[ruleIndex])
+                typeRules = self.retVal[ruleIndex][3]
+                rlDict = self.retVal[ruleIndex][4]
+                col = self.retVal[ruleIndex][5]
+                defaultColor = int(typeRules[1]) if typeRules[1] != "None" else None
+                if typeRules[0] == "Moore":
+                    self.model.ruleManager = RulesNearCells(colorsCount, defaultColor, True, rlDict)
+                    print(self.model.ruleManager)
+                elif typeRules[0] == "VonNeumann":
+                    self.model.ruleManager = RulesNearCells(colorsCount, defaultColor, False, rlDict)
+                elif typeRules[0] == "Margolis":
+                    self.model.ruleManager = RulesSquares(defaultColor, rlDict)
+                else:
+                    raise 'Ne zashol!'
 
     def setCellMatrix(self, cellMatrix):
         self.model.lifeMap.setCellMatrix(cellMatrix)
