@@ -14,8 +14,8 @@ class RulesNearCells(RuleManager):
     __init__(colorsNum, defaultColor, flagMoore, rules)
         >colorsNum: number of colors in used rules
         >defaultColor: colorID which return default or None for no default action
-        >rules: dictionary of rules^ used for coloring
         >flagMoore: is True for Moore neighborhood and False for vonNeumann's
+        >rules: dictionary of rules^ used for coloring
 
     compute(x, y, lifeMap)
         computes the color at cell (x, y)
