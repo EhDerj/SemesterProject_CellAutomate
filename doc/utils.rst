@@ -1,7 +1,7 @@
 Utilities
 ========================================
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+.. automodule:: utils
+  :special-members: __init__
+  :members:
 
