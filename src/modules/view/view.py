@@ -176,7 +176,7 @@ class View(tk.Frame):
             values=cbValues,
             state='readonly'
         )
-        self.cbDrawColor.current(0)
+        self.cbDrawColor.current(1)
 
         # Place widgets
         self.cvsCells.grid(columnspan=4)
