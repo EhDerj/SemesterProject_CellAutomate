@@ -5,21 +5,37 @@ from modules.view import View
 import os
 import gettext
 
-ru = gettext.translation(
-    'base',
-    localedir=os.path.dirname("./src/modules/view/ru"),
-    languages=['ru']
-)
-ru.install()
-_ = ru.gettext
+
+def initLocale():
+    """Init locale."""
+    ru = gettext.translation(
+        'base',
+        localedir=os.path.dirname("./src/modules/view/ru"),
+        languages=['ru']
+    )
+    ru.install()
+    _ = ru.gettext
+
+def initModel():
+    """Init model instance."""
+    map = LifeMap((50, 50))
+    manager = RulesNearCells(2, None, True, {})
+    return Model(map, manager)
+
+def initController(model):
+    """Init controller instance."""
+    return Controller(model)
+
+def initView(controller):
+    """Init view instance."""
+    return View(controller)
 
 
 if __name__ == '__main__':
-    map = LifeMap((50, 50))
-    manager = RulesNearCells(2, None, True, {})
+    initLocale()
 
-    model = Model(map, manager)
-    controller = Controller(model)
-    view = View(controller)
+    model = initModel()
+    controller = initController(model)
+    view = initView(controller)
 
     view.mainloop()
