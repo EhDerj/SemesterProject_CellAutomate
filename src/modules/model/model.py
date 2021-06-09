@@ -30,7 +30,7 @@ class Model:
         self.buffer = LifeMap(lMap.getSize())
         self.ruleManager = manager
 
-    def setLifeMap(self, newMap = None):
+    def setLifeMap(self, newMap=None):
         if newMap is None:
             self.lifeMap = LifeMap(self.lifeMap.getSize())
         else:
