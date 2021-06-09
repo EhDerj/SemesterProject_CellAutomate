@@ -4,6 +4,7 @@ from unittest.mock import MagicMock
 from modules.view import View
 from utils.colors import Colors
 from tkinter import Canvas
+from main import initLocale
 
 
 class ViewTests(unittest.TestCase):
@@ -11,6 +12,7 @@ class ViewTests(unittest.TestCase):
 
     def setUp(self):
         """Set up tests."""
+        initLocale()
         controller = MagicMock()
         controller.getLifemapSize = MagicMock(return_value=(50, 50))
         ruleSetup = (

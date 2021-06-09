@@ -5,7 +5,6 @@ from modules.view import View
 import os
 import gettext
 
-
 def initLocale():
     """Init locale."""
     ru = gettext.translation(
