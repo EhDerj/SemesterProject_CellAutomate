@@ -8,13 +8,7 @@ import gettext
 
 def initLocale():
     """Init locale."""
-    ru = gettext.translation(
-        'base',
-        localedir=os.path.dirname("./src/modules/view/ru"),
-        languages=['ru']
-    )
-    ru.install()
-    _ = ru.gettext
+    gettext.install("base", os.path.dirname("./src/modules/view/ru"))
 
 
 def initModel():
