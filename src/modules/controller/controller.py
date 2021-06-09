@@ -74,13 +74,11 @@ class Controller:
         """Initialize the model."""
         for i in self.retVal:
             if i[1] == ruleIndex:
-                print(self.retVal[ruleIndex])
                 typeRules = self.retVal[ruleIndex][3]
                 rlDict = self.retVal[ruleIndex][4]
                 defaultColor = int(typeRules[1]) if typeRules[1] != "None" else None
                 if typeRules[0] == "Moore":
                     self.model.ruleManager = RulesNearCells(colorsCount, defaultColor, True, rlDict)
-                    print(self.model.ruleManager)
                 elif typeRules[0] == "VonNeumann":
                     self.model.ruleManager = RulesNearCells(colorsCount, defaultColor, False, rlDict)
                 elif typeRules[0] == "Margolis":
