@@ -55,24 +55,30 @@ class View(tk.Frame):
         self.destroyAllWidgets()
 
         # Set up widgets
-        self.lbRuleSetups = tk.Listbox(self)
+        self.lbRuleSetups = tk.Listbox(self, width=60)
         self.lbRuleSetups.bind(
             '<<ListboxSelect>>',
             self.on_lbRuleSetups_Select,
         )
         self.refreshLbRuleSetups()
-        self.lbRuleSetups.pack()
+        self.lbRuleSetups.pack(
+            padx=20,
+            pady=20,
+        )
 
         self.lbColors = tk.Listbox(self, selectmode='multiple')
         self.lbColors.bind('<<ListboxSelect>>', self.on_lbColors_Select)
-        self.lbColors.pack()
+        # self.lbColors.pack() # Hide for uselessness
 
         self.btnEnter = tk.Button(
             self,
             text=_('Enter!'), # noqa
             command=self.showMainWindow
         )
-        self.btnEnter.pack()
+        self.btnEnter.pack(
+            padx=20,
+            pady=20,
+        )
 
         self.lbRuleSetups.selection_set(0, 0)
         self.on_lbRuleSetups_Select(None)
@@ -174,10 +180,10 @@ class View(tk.Frame):
 
         # Place widgets
         self.cvsCells.grid(columnspan=4)
-        self.cbDrawColor.grid(row=1, column=0)
-        self.btnStart.grid(row=1, column=1)
-        self.btnStop.grid(row=1, column=2)
-        self.btnExit.grid(row=1, column=3)
+        self.cbDrawColor.grid(row=1, column=0, pady=8)
+        self.btnStart.grid(row=1, column=1, pady=8)
+        self.btnStop.grid(row=1, column=2, pady=8)
+        self.btnExit.grid(row=1, column=3, pady=8)
 
         self.refreshMap()
         self.refreshScene()
