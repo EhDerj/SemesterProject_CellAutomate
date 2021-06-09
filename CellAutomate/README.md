@@ -20,3 +20,6 @@
 
 # Doc
 `./doc/make.bat html`
+
+# Update view locales
+`./makeLocales.sh`
