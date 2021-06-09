@@ -1,3 +1,4 @@
+"""Setup for distribution file."""
 from distutils.core import setup
 
 setup(

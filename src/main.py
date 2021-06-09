@@ -1,3 +1,4 @@
+"""Main file for launching the whole project."""
 from modules.model import Model, LifeMap, RulesNearCells
 from modules.controller import Controller
 from modules.view import View
