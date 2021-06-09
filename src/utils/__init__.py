@@ -1,6 +1,6 @@
 """Project utilities."""
-__all__  = ['ColorMap', 'Colors', 'RectangleSize']
+__all__ = ['ColorMap', 'Colors', 'RectangleSize']
 
-from .colorMap import *
-from .colors import *
-from .types import *
+from .colorMap import ColorMap
+from .colors import Colors
+from .types import RectangleSize
