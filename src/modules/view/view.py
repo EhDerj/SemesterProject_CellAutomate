@@ -83,7 +83,6 @@ class View(tk.Frame):
         self.lbRuleSetups.selection_set(0, 0)
         self.on_lbRuleSetups_Select(None)
         self.on_lbColors_Select(None)
-        
 
     def refreshLbRuleSetups(self):
         """Refresh listbox rule setups."""

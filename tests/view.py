@@ -1,3 +1,4 @@
+"""View unit tests module."""
 import unittest
 from unittest.mock import MagicMock
 from modules.view import View
@@ -6,33 +7,33 @@ from tkinter import Canvas
 
 
 class ViewTests(unittest.TestCase):
+    """View unit tests."""
 
     def setUp(self):
-        """Setup tests"""
+        """Set up tests."""
         controller = MagicMock()
         controller.getLifemapSize = MagicMock(return_value=(50, 50))
         ruleSetup = (
-            'GameOfLIfe.txt', 
-            0, 
-            Colors(['White', 'Black']), 
-            ['Moore', '0', ''], 
-            {(0, (5, 3)): 1, (1, (5, 3)): 1, (1, (6, 2)): 1}, 
-            ['White', 'Black']
+            'GameOfLIfe.txt',
+            0,
+            Colors(['White', 'Black']),
+            ['Moore', '0', ''],
+            {(0, (5, 3)): 1, (1, (5, 3)): 1, (1, (6, 2)): 1},
+            ['White', 'Black'],
         )
         controller.getRuleFiles = MagicMock(return_value=[ruleSetup])
 
         self.view = View(controller)
-        
 
     def test_windowsTransfer(self):
+        """Test windows transfer."""
         with self.assertRaises(AttributeError):
             self.view.cvsCells
         self.view.showMainWindow()
         self.assertEqual(type(self.view.cvsCells), Canvas)
 
-
     def test_inboundsDraw(self):
-        '''Inbounds draw test'''
+        """Inbounds draw test."""
         self.view.controller.getLifemapSize = MagicMock(return_value=(10, 10))
         self.view.showMainWindow()
 
@@ -45,17 +46,15 @@ class ViewTests(unittest.TestCase):
         x1, y1 = x0 + CELL_SIZE, y0 + CELL_SIZE
         self.assertEqual(self.view.cvsCells.coords(obje), [x0, y0, x1, y1])
 
-
     def test_outboundsDraw(self):
-        '''Outbounds draw test'''
+        """Outbounds draw test."""
         self.view.controller.getLifemapSize = MagicMock(return_value=(10, 10))
         self.view.showMainWindow()
         object = self.view.draw(10, 10, 0)
         self.assertEqual(object, None)
 
-
     def test_inboundsMouseDraw(self):
-        '''Tests mouse draw'''
+        """Test mouse draw."""
         self.view.controller.getLifemapSize = MagicMock(return_value=(5, 5))
         self.view.showMainWindow()
         initialObjectIds = self.view.cvsCells.find_all()
@@ -77,9 +76,8 @@ class ViewTests(unittest.TestCase):
         x1, y1 = x0 + cellSize, y0 + cellSize
         self.assertEqual(newObjectCoords, [x0, y0, x1, y1])
 
-
     def test_outboundsMouseDraw(self):
-        """Tests mouse draw"""
+        """Test mouse draw."""
         self.view.controller.getLifemapSize = MagicMock(return_value=(5, 5))
         self.view.showMainWindow()
         initialObjectIds = self.view.cvsCells.find_all()
