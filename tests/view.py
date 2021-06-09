@@ -1,9 +1,3 @@
-import sys
-from typing import Match
-from unittest.signals import registerResult
-
-sys.path.append('../src')
-
 import unittest
 from unittest.mock import MagicMock
 from modules.view import View
@@ -19,12 +13,11 @@ class ViewTests(unittest.TestCase):
 
         self.view = View(controller)
 
-
-def test_windowsTransfer(self):
-    with self.assertRaises(AttributeError):
-        self.view.cvsCells
-    self.view.showMainWindow()
-    self.assertEqual(type(self.view.cvsCells), Canvas)
+    def test_windowsTransfer(self):
+        with self.assertRaises(AttributeError):
+            self.view.cvsCells
+        self.view.showMainWindow()
+        self.assertEqual(type(self.view.cvsCells), Canvas)
 
 
 def test_inboundsDraw(self):
