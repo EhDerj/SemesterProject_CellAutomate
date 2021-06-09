@@ -142,3 +142,6 @@ doc/_build/
 
 # Other
 Pipfile.*
+
+# flake8
+flakelog/
