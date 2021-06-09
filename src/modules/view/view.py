@@ -55,24 +55,35 @@ class View(tk.Frame):
         self.destroyAllWidgets()
 
         # Set up widgets
-        self.lbRuleSetups = tk.Listbox(self)
+        self.lbRuleSetups = tk.Listbox(self, width=60)
         self.lbRuleSetups.bind(
             '<<ListboxSelect>>',
             self.on_lbRuleSetups_Select,
         )
         self.refreshLbRuleSetups()
-        self.lbRuleSetups.pack()
+        self.lbRuleSetups.pack(
+            padx=20,
+            pady=20,
+        )
 
         self.lbColors = tk.Listbox(self, selectmode='multiple')
         self.lbColors.bind('<<ListboxSelect>>', self.on_lbColors_Select)
-        self.lbColors.pack()
+        # self.lbColors.pack() # Hide for uselessness
 
         self.btnEnter = tk.Button(
             self,
             text=_('Enter!'), # noqa
             command=self.showMainWindow
         )
-        self.btnEnter.pack()
+        self.btnEnter.pack(
+            padx=20,
+            pady=20,
+        )
+
+        self.lbRuleSetups.selection_set(0, 0)
+        self.on_lbRuleSetups_Select(None)
+        self.on_lbColors_Select(None)
+        
 
     def refreshLbRuleSetups(self):
         """Refresh listbox rule setups."""
@@ -91,6 +102,7 @@ class View(tk.Frame):
         self.lbColors.delete(0, END)
         for i, color in enumerate(self.colors):
             self.lbColors.insert(i, color)
+        self.lbColors.selection_set(0, END)
 
     def synRuleSetupList(self):
         """Refresh rule setup list."""
@@ -143,6 +155,7 @@ class View(tk.Frame):
             height=self.lifemapSize.height * View.CELL_SIZE
         )
         self.cvsCells.bind('<B1-Motion>', self.on_CvsCells_HoldingMouseOver)
+        self.cvsCells.bind('<ButtonPress-1>', self.on_CvsCells_HoldingMouseOver)
         self.btnStart = tk.Button(self, text=_('Start'), command=self.startLife) # noqa
         self.btnStop = tk.Button(
             self,
@@ -164,14 +177,14 @@ class View(tk.Frame):
             values=cbValues,
             state='readonly'
         )
-        self.cbDrawColor.current(0)
+        self.cbDrawColor.current(1)
 
         # Place widgets
         self.cvsCells.grid(columnspan=4)
-        self.cbDrawColor.grid(row=1, column=0)
-        self.btnStart.grid(row=1, column=1)
-        self.btnStop.grid(row=1, column=2)
-        self.btnExit.grid(row=1, column=3)
+        self.cbDrawColor.grid(row=1, column=0, pady=8)
+        self.btnStart.grid(row=1, column=1, pady=8)
+        self.btnStop.grid(row=1, column=2, pady=8)
+        self.btnExit.grid(row=1, column=3, pady=8)
 
         self.refreshMap()
         self.refreshScene()
