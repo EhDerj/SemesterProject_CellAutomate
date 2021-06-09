@@ -74,6 +74,11 @@ class View(tk.Frame):
         )
         self.btnEnter.pack()
 
+        self.lbRuleSetups.selection_set(0, 0)
+        self.on_lbRuleSetups_Select(None)
+        self.on_lbColors_Select(None)
+        
+
     def refreshLbRuleSetups(self):
         """Refresh listbox rule setups."""
         self.lbRuleSetups.delete(0, 'END')
@@ -91,6 +96,7 @@ class View(tk.Frame):
         self.lbColors.delete(0, END)
         for i, color in enumerate(self.colors):
             self.lbColors.insert(i, color)
+        self.lbColors.selection_set(0, END)
 
     def synRuleSetupList(self):
         """Refresh rule setup list."""
