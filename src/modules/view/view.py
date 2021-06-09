@@ -6,7 +6,11 @@ from tkinter import messagebox
 from utils.types import RectangleSize
 import gettext
 
-ru = gettext.translation('base', localedir=os.path.dirname("./src/modules/view/ru"), languages=['ru'])
+ru = gettext.translation(
+    'base',
+    localedir=os.path.dirname("./src/modules/view/ru"),
+    languages=['ru']
+)
 ru.install()
 _ = ru.gettext
 
