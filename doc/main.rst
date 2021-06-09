@@ -1,7 +1,7 @@
 Main
 ========================================
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+.. automodule:: main
+  :special-members: __init__
+  :members:
 

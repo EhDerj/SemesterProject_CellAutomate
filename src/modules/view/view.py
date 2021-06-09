@@ -38,6 +38,7 @@ class View(tk.Frame):
     def showWelcomeWindow(self):
         """Show welcome window."""
         self.stopLife()
+        self.controller.model.setLifeMap()
         self.synRuleSetupList()
 
         # Set up window
