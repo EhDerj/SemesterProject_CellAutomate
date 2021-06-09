@@ -1,5 +1,6 @@
 """Color map class."""
 
+
 class ColorMap:
     """
     Transfers fixed res matrix from liveMap to view.py module.

@@ -1,5 +1,6 @@
 """Colors class."""
 
+
 class Colors:
     """
     Colors class is a color palette^ expressed in a dictionary.
