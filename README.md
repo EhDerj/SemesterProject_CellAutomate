@@ -13,10 +13,10 @@
 Написание программы, реализующей клеточный автомат по заданным параметрам
 
 # Run
-python ./src/main.py
+`python ./src/main.py`
 
 # Test
-python -m unittest
+`python -m unittest`
 
 # Doc
-./doc/make.bat html
+`./doc/make.bat html`
