@@ -1,10 +1,10 @@
+"""Von Neumann's and Moore's neighbourhood."""
 from .ruleManager import RuleManager
 
 
 class RulesNearCells(RuleManager):
     """
-    Offspring of an abstract RuleManager class, implementing Von Neumann's
-    or Moore's neighbourhood algorithms
+    Offspring of an abstract RM class, implementing Von Neumann's or Moore's rules.
 
     Attributes
     __________
@@ -25,9 +25,11 @@ class RulesNearCells(RuleManager):
 
     changeMode()
         does nothing in this manager type
+
     """
 
     def __init__(self, colorsNum, defaultColor, flagMoore, rules):
+        """Initialize class."""
         self.colorsNum = colorsNum
         self.defaultColor = defaultColor
         self.flagMoore = flagMoore
@@ -35,14 +37,13 @@ class RulesNearCells(RuleManager):
 
     def compute(self, x, y, lifeMap):
         """
-        Computes the designated color at cell (x,y)
+        Compute the designated color at cell (x,y).
 
         :param x: x coordinate of cell
         :param y: y coordinate of cell
         :param lifeMap:
         :return: colorID of the cell
         """
-
         colordisp = [0] * self.colorsNum
         if self.flagMoore:
             for i in range(-1, 2):
@@ -64,7 +65,5 @@ class RulesNearCells(RuleManager):
             return self.defaultColor
 
     def changeMode(self):
-        """
-    This type of neighbouhood have only one mode
-        """
+        """Change is not allowed in this set of rules."""
         pass

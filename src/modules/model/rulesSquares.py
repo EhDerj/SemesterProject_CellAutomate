@@ -1,9 +1,10 @@
+"""Margulis rules handler class."""
 from .ruleManager import RuleManager
 
 
 class RulesSquares(RuleManager):
     """
-    Offspring of an abstract RuleManager class, implementing Margulis-block neighbourhood algorithms
+    Offspring of an abstract RuleManager class, implementing Margulis-block neighbourhood algorithms.
 
     Attributes
     __________
@@ -22,9 +23,11 @@ class RulesSquares(RuleManager):
 
     changeMode()
         move computing grid for 1 cell diagonal
+
     """
 
     def __init__(self, defaultColor, rules):
+        """Initialize class."""
         self.defaultColor = defaultColor
         self.rules = rules
         self.computed = dict()
@@ -32,7 +35,7 @@ class RulesSquares(RuleManager):
 
     def compute(self, x, y, lifeMap):
         """
-        This method computes current cell's designated color using Margulis-block algorithm
+        Compute current cell's designated color using Margulis-block algorithm.
 
         :param x: x coordinate of the cell
         :param y: y coordinate of the cell
@@ -73,8 +76,6 @@ class RulesSquares(RuleManager):
         return n
 
     def changeMode(self):
-        """
-    Changes if it's need to shift computing grid
-        """
+        """Change if it's needed to shift computing grid."""
         self.shift = not self.shift
         self.computed = dict()
