@@ -45,7 +45,7 @@ class ModelTests(unittest.TestCase):
         lmOne.setCell(0, 0, 2)
         lmOne.setCell(3, 1, 1)
         lmTwo.setCell(0, 0, 1)
-        lmTwo.setCell(3, 1, 2)
+        lmTwo.setCell(3, 1, 1)
 
         model = Model(
             lmZero,
