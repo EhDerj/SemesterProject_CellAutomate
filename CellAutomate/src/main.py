@@ -8,7 +8,6 @@ import gettext
 def initLocale():
     """Init locale."""
     gettext.install("view", "./src/modules/view/locales/")
-    _ = gettext.gettext
 
 
 def initModel():
