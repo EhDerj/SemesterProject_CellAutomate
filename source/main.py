@@ -5,15 +5,17 @@ from modules.view import View
 import os
 import gettext
 
+
 def initLocale():
     """Init locale."""
     ru = gettext.translation(
         'base',
-        localedir=os.path.dirname("./src/modules/view/ru"),
+        localedir=os.path.dirname("./source/modules/view/ru"),
         languages=['ru']
     )
     ru.install()
     _ = ru.gettext
+
 
 def initModel():
     """Init model instance."""
@@ -21,9 +23,11 @@ def initModel():
     manager = RulesNearCells(2, None, True, {})
     return Model(map, manager)
 
+
 def initController(model):
     """Init controller instance."""
     return Controller(model)
+
 
 def initView(controller):
     """Init view instance."""

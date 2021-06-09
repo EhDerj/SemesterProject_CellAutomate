@@ -1,5 +1,5 @@
 import sys
-sys.path.append('./src')
+sys.path.append('./source')
 
 import unittest
 from tests.view import ViewTests
