@@ -72,7 +72,6 @@ class Controller:
                 print(self.retVal[ruleIndex])
                 typeRules = self.retVal[ruleIndex][3]
                 rlDict = self.retVal[ruleIndex][4]
-                col = self.retVal[ruleIndex][5]
                 defaultColor = int(typeRules[1]) if typeRules[1] != "None" else None
                 if typeRules[0] == "Moore":
                     self.model.ruleManager = RulesNearCells(colorsCount, defaultColor, True, rlDict)

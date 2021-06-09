@@ -1,3 +1,3 @@
 __all__ = ['Controller']
 
-from .controller import *
+from .controller import Controller
