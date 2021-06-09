@@ -64,10 +64,10 @@ class RulesSquares(RuleManager):
             tup = self.rules[tup]
         elif self.defaultColor is not None:
             tup = (self.defaultColor,) * 4
-        self.computed[grid[0]], \
-        self.computed[grid[1]], \
-        self.computed[grid[2]], \
-        self.computed[grid[3]] = tup
+        (self.computed[grid[0]],
+         self.computed[grid[1]],
+         self.computed[grid[2]],
+         self.computed[grid[3]]) = tup
         n = self.computed[(x, y)]
         del self.computed[(x, y)]
         return n
