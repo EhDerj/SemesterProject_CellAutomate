@@ -35,3 +35,11 @@ class ControllerTests(unittest.TestCase):
         self.model.getLifeMap = MagicMock(return_value=checkValue)
         lifeMap = self.controller.getMap()
         self.assertEqual(lifeMap, checkValue)
+
+    def test_getLifeMapSize(self):
+        checkValue = 132132
+        lifeMap = MagicMock()
+        lifeMap.getSize = MagicMock(return_value=checkValue)
+        self.model.getLifeMap = MagicMock(return_value=lifeMap)
+        lifeMap = self.controller.getLifemapSize()
+        self.assertEqual(lifeMap, checkValue)
