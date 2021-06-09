@@ -155,6 +155,7 @@ class View(tk.Frame):
             height=self.lifemapSize.height * View.CELL_SIZE
         )
         self.cvsCells.bind('<B1-Motion>', self.on_CvsCells_HoldingMouseOver)
+        self.cvsCells.bind('<ButtonPress-1>', self.on_CvsCells_HoldingMouseOver)
         self.btnStart = tk.Button(self, text=_('Start'), command=self.startLife) # noqa
         self.btnStop = tk.Button(
             self,
