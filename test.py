@@ -1,3 +1,4 @@
+"""Testing mode launch."""
 import sys
 sys.path.append('./src')
 

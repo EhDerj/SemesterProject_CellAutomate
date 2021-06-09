@@ -1,3 +1,4 @@
+"""Model initialization."""
 __all__ = ['Model', 'LifeMap', 'RulesNearCells', 'RulesSquares']
 
 from .model import Model

@@ -1,10 +1,11 @@
+"""Main model of the cell automate."""
 from .lifeMap import LifeMap
 import itertools as it
 
 
 class Model:
     """
-    This class represents the full model of the system, including the matrix and the set of rules
+    This class represents the full model of the system, including the matrix and the set of rules.
 
     Attributes
     _________
@@ -23,14 +24,17 @@ class Model:
         according to the designated algorithm set
     getLifeMap()
         gets the used lifeMap
+
     """
 
     def __init__(self, lMap, manager):
+        """Initialize class."""
         self.lifeMap = lMap
         self.buffer = LifeMap(lMap.getSize())
         self.ruleManager = manager
 
     def setLifeMap(self, newMap=None):
+        """Set life map."""
         if newMap is None:
             self.lifeMap = LifeMap(self.lifeMap.getSize())
         else:
@@ -38,7 +42,8 @@ class Model:
 
     def makeStep(self):
         """
-        This method goes through a cycle on every cell and calculates its color
+        Make a cycle on every cell and calculate its color.
+
         :return: empty, just makes the changes
         """
         x, y = self.lifeMap.getSize()
@@ -48,4 +53,5 @@ class Model:
         self.lifeMap, self.buffer = self.buffer, self.lifeMap
 
     def getLifeMap(self):
+        """Get life map."""
         return self.lifeMap
